@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>SAyDS - Mis Aplicaciones</title>
+    </h:head>
+    <h:body>
+       <f:metadata>  
+            <f:event listener="#{mbAplicaciones.iniciar}" type="preRenderView"></f:event>  
+       </f:metadata>            
+        <h:form>
+                <p:panel id="EspecieForm" 
+                         header="Bienvenid@ #{mbAplicaciones.user}, para acceder a una Aplicación haga clic en el botón correpondiente" 
+                         style="margin-bottom:10px;">
+
+                    <p:dataTable value="#{mbAplicaciones.listado}" var="e" id="appList" rows="5"
+                                 filteredValue="#{mbAplicaciones.listadoFilter}"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15">
+                        <f:facet name="header">
+                            #{bundle.ListadoApp}
+                            <p:commandButton id="toggler" type="button" value="Columnas" icon="ui-icon-calculator" style="margin-left: 10px" />
+                            <p:commandButton icon="ui-icon-refresh" value="Listar" action="#{mbAplicaciones.prepareList}" update="appList" style="margin-left: 10px"/>
+                            <p:columnToggler datasource="appList" trigger="toggler" />
+                        </f:facet>
+
+                        <p:column headerText="#{bundle.AppNombre}" sortBy="#{e.nombre}" filterBy="#{e.nombre}" filterMatchMode="contains">
+                            <p:outputLabel value="#{e.nombre}"/>
+                        </p:column>   
+
+                        <p:column headerText="#{bundle.AppDesc}" sortBy="#{e.descripcion}" filterBy="#{e.descripcion}" filterMatchMode="contains">
+                            <p:outputLabel value="#{e.descripcion}"/>
+                        </p:column>  
+
+                        <p:column headerText="#{bundle.AppArea}" sortBy="#{e.areaReferente}" filterBy="#{e.areaReferente}" filterMatchMode="contains">
+                            <p:outputLabel value="#{e.areaReferente}"/>
+                        </p:column>  
+
+                        <p:column headerText="Ingresar" style="width:135px">
+                            <p:commandLink value="Acceder"  action="#{mbAplicaciones.current.url}">
+                            </p:commandLink>                      
+                        </p:column>                
+                    </p:dataTable>                    
+                
+                </p:panel>
+        </h:form>
+        
+        
+    </h:body>
+</html>
+
