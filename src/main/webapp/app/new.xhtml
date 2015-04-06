@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/facelets/templates/appTemplate.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+         
+     xmlns:h="http://xmlns.jcp.org/jsf/html">
+     <ui:define name="content">
+        <p:panel id="frmNewApp" >
+
+            <h:form id="new">
+                <p:growl id="messages" />
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.AppNombre}" for="nombre"/>
+                    <p:inputText id="nombre"
+                                 value="#{mbAplicaciones.current.nombre}" 
+                                 requiredMessage="#{bundle.Required_AppNombre_message}" 
+                                 maxlength="100"
+                                 required="true" >
+                    </p:inputText>  
+                    
+                    <p:outputLabel value="#{bundle.AppDesc}" for="desc"/>
+                    <p:inputText id="desc"
+                                 value="#{mbAplicaciones.current.descripcion}" 
+                                 requiredMessage="#{bundle.Required_AppDesc_message}" 
+                                 maxlength="250"
+                                 required="true" >
+                    </p:inputText>
+                    
+                    <p:outputLabel value="#{bundle.AppArea}" for="area"/>
+                    <p:inputText id="area"
+                                 value="#{mbAplicaciones.current.areaReferente}" 
+                                 requiredMessage="#{bundle.Required_AppArea_message}" 
+                                 maxlength="100"
+                                 required="true" >
+                    </p:inputText>  
+                    
+                    <p:outputLabel value="#{bundle.AppUrl}" for="url"/>
+                    <p:inputText id="url"
+                                 value="#{mbAplicaciones.current.url}" 
+                                 requiredMessage="#{bundle.Required_AppUrl_message}" 
+                                 maxlength="100"
+                                 required="true" >
+                    </p:inputText>  
+                </h:panelGrid>
+            </h:form>
+
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton icon="ui-icon-check" value="Guardar" action="#" update="new"/>
+                    <p:commandButton icon="ui-icon-cancel" value="Limpiar" style="float: right" >
+                        <p:ajax update="new" resetValues="true" />
+                    </p:commandButton>
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton icon="ui-icon-arrowreturnthick-1-w" 
+                                     action="#{mbAplicaciones.prepareList}" 
+                                     value="Volver" 
+                                     immediate="true" 
+                                     ajax="false"/>
+                </f:facet>
+            </p:toolbar>
+            
+        </p:panel>
+     </ui:define>
+</ui:composition>
+

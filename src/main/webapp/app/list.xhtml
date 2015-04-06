@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/facelets/templates/appTemplate.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+>
+     <ui:define name="content">
+        <p:panel id="listAppGest" >
+
+            <p:dataTable value="#{mbAplicaciones.listado}" var="e" id="appList" rows="5"
+                         filteredValue="#{mbAplicaciones.listadoFilter}"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+                <f:facet name="header">
+                    #{bundle.ListadoGest}
+                    <p:commandButton icon="ui-icon-refresh" value="Actualizar listado" action="#{mbAplicaciones.prepareList}" update="appList" style="margin-left: 10px"/>
+                    <p:commandButton icon="ui-icon-newwin" value="Agregar nueva" action="#{mbAplicaciones.prepareCreate()}" ajax="false" />
+                </f:facet>
+
+                <p:column headerText="#{bundle.AppNombre}" sortBy="#{e.nombre}" filterBy="#{e.nombre}" filterMatchMode="contains">
+                    <p:outputLabel value="#{e.nombre}"/>
+                </p:column>   
+
+                <p:column headerText="#{bundle.AppDesc}" sortBy="#{e.descripcion}" filterBy="#{e.descripcion}" filterMatchMode="contains">
+                    <p:outputLabel value="#{e.descripcion}"/>
+                </p:column>  
+
+                <p:column headerText="#{bundle.AppArea}" sortBy="#{e.areaReferente}" filterBy="#{e.areaReferente}" filterMatchMode="contains">
+                    <p:outputLabel value="#{e.areaReferente}"/>
+                </p:column>  
+                
+                <p:column headerText="#{bundle.AppUrl}" sortBy="#{e.url}" filterBy="#{e.url}" filterMatchMode="contains">
+                    <p:outputLabel value="#{e.url}"/>
+                </p:column>  
+
+                <p:column headerText="Acciones" style="width:135px">
+                    <p:commandLink value="Acceder"  action="#{mbAplicaciones.current.url}">
+                    </p:commandLink>                      
+                </p:column>                
+            </p:dataTable>                    
+
+        </p:panel>
+     </ui:define>
+</ui:composition>
+

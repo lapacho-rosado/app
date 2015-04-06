@@ -12,6 +12,7 @@ import ar.gob.ambiente.aplicaciones.gestionaplicaciones.facades.AplicacionFacade
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.facades.UsuarioFacade;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -80,16 +81,20 @@ public class MbAplicaciones implements Serializable{
     }
     
     
-    public void iniciar(){
+    /*******************************
+     ** Métodos de inicialización **
+     *******************************/
+    
+    /**
+     * Método para inicializar el usuario
+     */
+    @PostConstruct
+    public void init(){
         // lo puede levantar del xhml con #{request.remoteUser}
         user = FacesContext.getCurrentInstance()
             .getExternalContext().getRemoteUser();
     }
     
-    
-    /*******************************
-     ** Métodos de inicialización **
-     *******************************/
     /**
      * Método para inicializar el listado de las aplicaciones
      * @return acción para el listado de entidades
@@ -97,6 +102,14 @@ public class MbAplicaciones implements Serializable{
     public String prepareList() {       
         return "list";
     } 
+    
+    /**
+     * Método para preparar la creación y redireccionamiento a la página correspondiente
+     * @return 
+     */
+    public String prepareCreate() {
+        return "new";
+    }
     
     
     
