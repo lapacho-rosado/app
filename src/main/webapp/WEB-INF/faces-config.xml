@@ -10,6 +10,13 @@
         </resource-bundle>
     </application>    
     
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>https://localhost:8181/cas/logout</to-view-id>
+        </navigation-case>
+    </navigation-rule>    
+    
     <managed-bean>
         <managed-bean-name>mbAplicaciones</managed-bean-name>
         <managed-bean-class>ar.gob.ambiente.aplicaciones.gestionaplicaciones.mb.MbAplicaciones</managed-bean-class>
