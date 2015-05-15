@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/facelets/templates/preTemplate.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:h="http://xmlns.jcp.org/jsf/html">
+     <ui:define name="content">
+         <h:form>
+             <p:panel style="position: absolute; top:25%; left:50%; width:400px; margin-left:-200px" id="frmLogin" >
+                <h:panelGrid columns="2" >
+                    <f:facet name="header">
+                        <p:outputLabel value="Ingrese los datos correspondientes al dominio MEDIOAMBIENTE.GOV.AR" style="font-size: 70%; text-align: center" />
+                    </f:facet>
+                    <p:outputLabel value="Usuario" />
+                    <p:inputText value="#{mbLogin.usuario}" id="usuario" title="usuario" />
+                    <p:outputLabel value="Contraseña" />
+                    <p:password value="#{mbLogin.pass}" id="pass" title="pass" />
+                    <f:facet name="footer">
+                        <p:commandButton id="loginButton" icon="ui-icon-play" 
+                                         value="Ingresar" 
+                                         actionListener="#{mbLogin.login}" 
+                                         oncomplete="manejarLogin(xhr, status, args)" style="margin-left: 70px" />
+                        <p:commandButton icon="ui-icon-cancel" value="Limpiar" style="margin: 10px">
+                            <p:ajax update="frmLogin" resetValues="true" />
+                        </p:commandButton>
+                    </f:facet>
+                </h:panelGrid>
+             </p:panel>
+         </h:form>
+
+        <script type="text/javascript">
+            //<![CDATA[
+            function manejarLogin(xhr, status, args){
+                if (!args.validationFailed && args.estaLogeado){
+                    setTimeout(function(){
+                        window.location = args.view;
+                    }, 800);
+                }
+            }
+            //]]>
+        </script>
+         
+     </ui:define>
+</ui:composition>
+

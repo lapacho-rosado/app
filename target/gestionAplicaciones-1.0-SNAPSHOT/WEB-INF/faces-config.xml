@@ -22,4 +22,9 @@
         <managed-bean-class>ar.gob.ambiente.aplicaciones.gestionaplicaciones.mb.MbAplicaciones</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>mbLogin</managed-bean-name>
+        <managed-bean-class>ar.gob.ambiente.aplicaciones.gestionaplicaciones.mb.MbLogin</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>    
 </faces-config>
