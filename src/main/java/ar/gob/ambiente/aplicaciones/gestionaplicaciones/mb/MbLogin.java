@@ -54,31 +54,32 @@ public class MbLogin implements Serializable{
         return "login";
     }
     
-    public void login(ActionEvent actionEvent){
+    public void login(ActionEvent actionEvent) throws NamingException{
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
         Map<String,Object> attrs;
 
-        try {
-            // autenticamos el usuario y pass recibidos
-            attrs = autenticar(usuario,pass);  
+        // autenticamos el usuario y pass recibidos
+        attrs = autenticar(usuario,pass);          
+
+        if(attrs != null){
             logeado = true;
             displayName = attrs.get("displayName").toString();
-            JsfUtil.addSuccessMessage("Bienvenid@ " + attrs.get("displayName").toString());
-            //msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenid@", attrs.get("displayName").toString());
-        } catch (Exception ex) {
-            System.out.println("Error Autenticando mediante LDAP, Error causado por : " + ex.toString());
+            //JsfUtil.addSuccessMessage("Bienvenid@ " + attrs.get("displayName").toString());
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenid@", attrs.get("displayName").toString());
+        }else{
             logeado = false;
-            JsfUtil.addErrorMessage("Error de inicio de sesión, Usuario y/o contraseña invalidos");
-            //msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error de inicio de sesión", "Usuario y/o contraseña invalidos");
-        } finally {
-            //FacesContext.getCurrentInstance().addMessage(null, msg);
-            if(logeado){
-                context.addCallbackParam("view", "/gestionAplicaciones");
-                context.addCallbackParam("estaLogeado", logeado);
-                guardarCookie();
-            }
+            //JsfUtil.addErrorMessage("Error de inicio de sesión, Usuario y/o contraseña invalidos");
+            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error de inicio de sesión", "Usuario y/o contraseña invalidos");
         }
+
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+
+        if(logeado){
+            context.addCallbackParam("view", "/gestionAplicaciones");
+            context.addCallbackParam("estaLogeado", logeado);
+            guardarCookie();
+        }            
     }
     
     /**
@@ -88,7 +89,7 @@ public class MbLogin implements Serializable{
      * @param pass
      * @return 
      */
-    private Map<String, Object> autenticar(String user, String pass){
+    private Map<String, Object> autenticar(String user, String pass) throws NamingException{
         // parámetros para la conexión al AD
         String domain = "MEDIOAMBIENTE.GOV.AR";
         String ldapHost = "ldap://vmad2008.medioambiente.gov.ar";
@@ -114,42 +115,48 @@ public class MbLogin implements Serializable{
         env.put(Context.SECURITY_PRINCIPAL, user + "@" + domain);
         env.put(Context.SECURITY_CREDENTIALS, pass);      
         
+        // obtenemos el contexto si el usuario es autenticado
         try{
-            // obtenemos el contexto si el usuario es autenticado
             ctxGC = new InitialLdapContext(env, null);
-            
             // leemos los atributos del usuario
-            NamingEnumeration<SearchResult> answer = ctxGC.search(searchBase, searchFilter, searchCtls);
-            while (answer.hasMoreElements()) {
-                SearchResult sr = (SearchResult) answer.next();
-                Attributes attrs = sr.getAttributes();
-                Map<String, Object> amap = null;
-                if (attrs != null) {
-                    amap = new HashMap<>();
-                    NamingEnumeration<?> ne = attrs.getAll();
-                    while (ne.hasMore()) {
-                        Attribute attr = (Attribute) ne.next();
-                        if (attr.size() == 1) {
-                            amap.put(attr.getID(), attr.get());
-                        } else {
-                            HashSet<String> s = new HashSet<>();
-                            NamingEnumeration n =  attr.getAll();
-                            while (n.hasMoreElements()) {
-                                s.add((String)n.nextElement());
+            NamingEnumeration<SearchResult> answer = ctxGC.search(searchBase, searchFilter, searchCtls);   
+            
+            if(answer != null){
+                while (answer.hasMoreElements()) {
+                    SearchResult sr = (SearchResult) answer.next();
+                    Attributes attrs = sr.getAttributes();
+                    Map<String, Object> amap = null;
+                    if (attrs != null) {
+                        amap = new HashMap<>();
+                        NamingEnumeration<?> ne = attrs.getAll();
+                        while (ne.hasMore()) {
+                            Attribute attr = (Attribute) ne.next();
+                            if (attr.size() == 1) {
+                                amap.put(attr.getID(), attr.get());
+                            } else {
+                                HashSet<String> s = new HashSet<>();
+                                NamingEnumeration n =  attr.getAll();
+                                while (n.hasMoreElements()) {
+                                    s.add((String)n.nextElement());
+                                }
+                                amap.put(attr.getID(), s);
                             }
-                            amap.put(attr.getID(), s);
                         }
+                        ne.close();
                     }
-                    ne.close();
-                }
-                // cerramos el contexto
-                ctxGC.close(); 
-                return amap;
+                    // cerramos el contexto
+                    ctxGC.close(); 
+                    return amap;
+                }          
             }
-        }catch(NamingException nex){
-             nex.printStackTrace();
+            
+            throw new ApplicationError("Usuario y/o contraseña inválidos");
+            
+        }catch (NamingException | ApplicationError t){
+            handleException(t);
         }
         return null;
+
     }    
     
     public void logout(){
@@ -188,6 +195,22 @@ public class MbLogin implements Serializable{
         } catch (Exception ex) {
             Logger.getLogger(MbLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
+    } 
+    
+    /**
+     * Método para manejar los errores y enviar mensajes al usuario
+     * @param exception 
+     */
+    public void handleException (Throwable exception){
+        String message = "";
+        if (exception instanceof ApplicationError){
+            message = "Ha ocurrido un error auntenticando el usuario : " + exception.getMessage();
+        }else{
+            message = "¡Ha ocurrido un error inesperado!";
+        }
+        
+        FacesMessage facesMessage = new FacesMessage(message);
+        FacesContext.getCurrentInstance().addMessage(null,  facesMessage);
     }
 
     public String getCuqui() {
@@ -229,4 +252,12 @@ public class MbLogin implements Serializable{
     public void setLogeado(boolean logeado) {
         this.logeado = logeado;
     }
+    
+    // clase para manejar los mensajes de error
+    class ApplicationError extends RuntimeException{
+
+        private ApplicationError(String message) {
+            super(message);
+        }
+    };          
 }

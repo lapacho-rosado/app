@@ -17,6 +17,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,11 +29,8 @@ import javax.servlet.http.HttpSession;
 public class LoginFilter implements Filter {
     
     private static final boolean debug = true;
-
-    // The filter configuration object we are associated with.  If
-    // this value is null, this filter instance is not currently
-    // configured. 
     private FilterConfig filterConfig = null;
+    private static final String nameCookieUrl = "url";
     
     public LoginFilter() {
     }    
@@ -113,8 +111,6 @@ public class LoginFilter implements Filter {
 
             //Proceso la URL que está requiriendo el cliente
             String urlStr = req.getRequestURL().toString().toLowerCase();
-            boolean noProteger = noProteger(urlStr);
-            System.out.println(urlStr + " - desprotegido=[" + noProteger + "]");
 
             //Si no requiere protección continúo normalmente.
             if (noProteger(urlStr)) {
@@ -129,13 +125,24 @@ public class LoginFilter implements Filter {
               return;
             }
 
-
-            //El recurso requiere protección, pero el usuario ya está logueado.
+        //El recurso requiere protección, pero el usuario ya está logueado.
+        //Verifico si el usuario solicita acceso a una aplicación de forma directa leyendo la cookie de url
+        String url = "";
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if(cookie.getName().equals(nameCookieUrl)){
+                    url = cookie.getValue();
+                }
+            }
+        }        
+        
+        // Si solicita acceso directo lo redirecciono
+        if(!url.equals("")){
+            res.sendRedirect(url);
+        }else{
             chain.doFilter(request, response);  
-            
-            // guardo sesion
-            HttpSession sesion = req.getSession(true);
-            sesion.setAttribute("usuario",mbLogin.getUsuario());
+        }
             
             
         /*
