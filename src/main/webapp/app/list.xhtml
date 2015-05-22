@@ -4,20 +4,24 @@
      xmlns="http://www.w3.org/1999/xhtml"
      xmlns:f="http://java.sun.com/jsf/core"
      xmlns:ui="http://java.sun.com/jsf/facelets"
-     xmlns:p="http://primefaces.org/ui"
->
+     xmlns:p="http://primefaces.org/ui">
      <ui:define name="content">
+        <f:metadata>  
+            <f:event listener="#{mbAplicacion.iniciar}" type="preRenderView"></f:event>  
+        </f:metadata>           
         <p:panel id="listAppGest" >
 
-            <p:dataTable value="#{mbAplicaciones.listado}" var="e" id="appList" rows="5"
-                         filteredValue="#{mbAplicaciones.listadoFilter}"
+            <p:dataTable value="#{mbAplicacion.listado}" var="e" id="appList" rows="5"
+                         filteredValue="#{mbAplicacion.listadoFilter}"
                          paginator="true"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15">
                 <f:facet name="header">
                     #{bundle.ListadoGest}
-                    <p:commandButton icon="ui-icon-refresh" value="Actualizar listado" action="#{mbAplicaciones.prepareList}" update="appList" style="margin-left: 10px"/>
-                    <p:commandButton icon="ui-icon-newwin" value="Agregar nueva" action="#{mbAplicaciones.prepareCreate()}" ajax="false" />
+                    <p:columnToggler datasource="appList" trigger="toggler" />
+                    <p:commandButton id="toggler" type="button" value="Columnas" icon="ui-icon-calculator" style="margin-left: 10px" />
+                    <p:commandButton icon="ui-icon-refresh" value="Actualizar listado" action="#{mbAplicacion.prepareList}" update="appList" style="margin-left: 10px"/>
+                    <p:commandButton icon="ui-icon-newwin" value="Agregar nueva" action="#{mbAplicacion.prepareCreate}" ajax="false" />
                 </f:facet>
 
                 <p:column headerText="#{bundle.AppNombre}" sortBy="#{e.nombre}" filterBy="#{e.nombre}" filterMatchMode="contains">
@@ -36,10 +40,26 @@
                     <p:outputLabel value="#{e.url}"/>
                 </p:column>  
 
-                <p:column headerText="Acciones" style="width:135px">
-                    <p:commandLink value="Acceder"  action="#{mbAplicaciones.current.url}">
-                    </p:commandLink>                      
-                </p:column>                
+                <p:column headerText="Acciones" style="width:140px">
+                    <p:growl id="messages" showDetail="true" />                           
+                    <p:commandButton icon="ui-icon-zoomin" action="#{mbAplicacion.prepareView}" title="Ver Detalle">
+                        <f:setPropertyActionListener value="#{e}" target="#{mbAplicacion.current}" />  
+                    </p:commandButton>
+
+                    <p:commandButton icon="ui-icon-pencil" action="#{mbAplicacion.prepareEdit}" title="Editar" >
+                        <f:setPropertyActionListener value="#{e}" target="#{mbAplicacion.current}" /> 
+                    </p:commandButton>
+
+                    <p:commandButton icon="ui-icon-close" action="#{mbAplicacion.prepareDestroy}" title="Eliminar" update="appList">
+                        <f:setPropertyActionListener value="#{e}" target="#{mbAplicacion.current}" />
+                        <p:confirm header="Confirmar" message="¿Desea eliminar a esta Aplicación?" icon="ui-icon-alert" />
+                    </p:commandButton>                
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>      
+                </p:column>              
             </p:dataTable>                    
 
         </p:panel>

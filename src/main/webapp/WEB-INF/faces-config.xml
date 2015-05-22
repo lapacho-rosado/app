@@ -10,21 +10,30 @@
         </resource-bundle>
     </application>    
     
-    <navigation-rule>
-        <navigation-case>
-            <from-outcome>logout</from-outcome>
-            <to-view-id>https://localhost:8181/cas/logout</to-view-id>
-        </navigation-case>
-    </navigation-rule>    
+    <factory>
+        <exception-handler-factory>
+            ar.gob.ambiente.aplicaciones.gestionaplicaciones.util.AjaxExceptionHandlerFactory
+        </exception-handler-factory>
+    </factory>
     
     <managed-bean>
-        <managed-bean-name>mbAplicaciones</managed-bean-name>
-        <managed-bean-class>ar.gob.ambiente.aplicaciones.gestionaplicaciones.mb.MbAplicaciones</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-name>mbAplicacion</managed-bean-name>
+        <managed-bean-class>ar.gob.ambiente.aplicaciones.gestionaplicaciones.mb.MbAplicacion</managed-bean-class>
+    
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>mbLogin</managed-bean-name>
         <managed-bean-class>ar.gob.ambiente.aplicaciones.gestionaplicaciones.mb.MbLogin</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>    
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>mbInicio</managed-bean-name>
+        <managed-bean-class>ar.gob.ambiente.aplicaciones.gestionaplicaciones.mb.MbInicio</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>mbUsuario</managed-bean-name>
+        <managed-bean-class>ar.gob.ambiente.aplicaciones.gestionaplicaciones.mb.MbUsuario</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>

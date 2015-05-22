@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/facelets/templates/appTemplate.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:h="http://xmlns.jcp.org/jsf/html">
+     <ui:define name="content">
+        <p:panel id="pnView" header="#{bundle.DetalleApp}" style="margin-bottom:10px;">
+            <h:form>
+                <p:messages id="messages" />
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.UsNombre}: "/>
+                    <h:outputText value="#{mbUsuario.selected.nombre}" title="#{bundle.UsNombre}"/>
+
+                    <h:outputLabel value="#{bundle.UsNombreCompleto}: "/>
+                    <h:outputText value="#{mbUsuario.selected.nombreCompleto}" title="#{bundle.UsNombreCompleto}"/>
+
+                    <h:outputLabel value="#{bundle.AppUsXApp}&nbsp;" />
+                    <p:commandButton value="Ver" type="button" onclick="PF('AppUsuarios').show();" />      
+                </h:panelGrid>   
+
+                <p:dialog style="font-size: 80%" 
+                          header="Listado de Aplicaciones asignadas"
+                          widgetVar="AppUsuarios" 
+                          showEffect="fade" 
+                          hideEffect="fade" 
+                          height="300" 
+                          width="30%">
+                    <p:dataTable value="#{mbUsuario.selected.aplicaciones}" var="g" id="usXAppList">
+                        <p:column headerText="#{bundle.AppNombre}" filterValue="#{mbUsuario.listadoFilter}"
+                                  filterMatchMode="contains"
+                                  filterBy="#{g.nombre}"
+                                  sortBy="#{g.nombre}" >
+                            <p:outputLabel value="#{g.nombre}"/> 
+                        </p:column>                        
+                    </p:dataTable>
+                </p:dialog>
+
+            </h:form> 
+            <br></br>
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton icon="ui-icon-refresh" action="#{mbUsuario.prepareList}" value="Volver" ajax="false" style="float: right"/>
+                </f:facet>
+            </p:toolbar>
+        </p:panel>
+     </ui:define>
+</ui:composition>         
+

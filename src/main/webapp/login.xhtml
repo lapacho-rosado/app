@@ -10,7 +10,7 @@
          <p:growl id="mensajes" showDetail="true" life="2000" />
          <h:form>
              <p:panel style="position: absolute; top:25%; left:50%; width:400px; margin-left:-200px" id="frmLogin" >
-                 <p:growl id="messages" globalOnly="true" />
+                 <p:growl id="messages" showDetail="true" life="2000"/>
                 <h:panelGrid columns="2" >
                     <f:facet name="header">
                         <p:outputLabel value="Ingrese los datos correspondientes al dominio MEDIOAMBIENTE.GOV.AR" style="font-size: 70%; text-align: center" />
@@ -21,7 +21,7 @@
                     <p:password value="#{mbLogin.pass}" id="pass" title="pass" />
                     <f:facet name="footer">
                         <p:commandButton id="loginButton" icon="ui-icon-play" 
-                                         value="Ingresar" 
+                                         value="Ingresar"
                                          actionListener="#{mbLogin.login}" 
                                          oncomplete="manejarLogin(xhr, status, args)" style="margin-left: 70px" />
                         <p:commandButton icon="ui-icon-cancel" value="Limpiar" style="margin: 10px">

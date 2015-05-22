@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/facelets/templates/appTemplate.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+         
+     xmlns:h="http://xmlns.jcp.org/jsf/html">
+     <ui:define name="content">
+        <p:panel id="frmNewApp" >
+
+            <h:form id="edit">
+                <p:growl id="messages" />
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.AppNombre}" for="nombre"/>
+                    <p:inputText id="nombre"
+                                 value="#{mbAplicacion.current.nombre}" 
+                                 requiredMessage="#{bundle.Required_AppNombre_message}" 
+                                 validator="#{mbAplicacion.validarUpdateNombre}"
+                                 maxlength="100"
+                                 required="true" >
+                    </p:inputText>  
+                    
+                    <p:outputLabel value="#{bundle.AppDesc}" for="desc"/>
+                    <p:inputText id="desc"
+                                 value="#{mbAplicacion.current.descripcion}" 
+                                 requiredMessage="#{bundle.Required_AppDesc_message}" 
+                                 maxlength="250"
+                                 required="true" >
+                    </p:inputText>
+                    
+                    <p:outputLabel value="#{bundle.AppArea}" for="area"/>
+                    <p:inputText id="area"
+                                 value="#{mbAplicacion.current.areaReferente}" 
+                                 requiredMessage="#{bundle.Required_AppArea_message}" 
+                                 maxlength="100"
+                                 required="true" >
+                    </p:inputText>  
+                    
+                    <p:outputLabel value="#{bundle.AppUrl}" for="url"/>
+                    <p:inputText id="url"
+                                 value="#{mbAplicacion.current.url}" 
+                                 requiredMessage="#{bundle.Required_AppUrl_message}" 
+                                 validator="#{mbAplicacion.validarUpdateUrl}"
+                                 maxlength="100"
+                                 required="true" >
+                    </p:inputText> 
+                    
+                    <h:outputLabel   value="#{bundle.UsuariosAsociados}" />
+                    <h:panelGrid id="btnVerUs" columns="2">                       
+                        <p:commandButton value="Ver/Quitar Asignados" 
+                                     icon="ui-icon-extlink"
+                                     onclick="PF('UsVinc').show();"  /> 
+                        <p:commandButton value="Ver/Agregar Disponibles" 
+                                     icon="ui-icon-inlink" 
+                                     type="button" 
+                                     onclick="PF('UsDisp').show();" />      
+
+                    </h:panelGrid> 
+                    
+                </h:panelGrid>
+                
+                <p:dialog style="font-size: 80%"
+                          header="Listado de usuarios asociados"
+                          widgetVar="UsVinc"
+                          showEffect="fade"
+                          hideEffect="fade"
+                          height="300"
+                          width="30%">
+                    <p:dataTable value="#{mbAplicacion.current.usuarios}" filteredValue="#{mbAplicacion.listUsuariosFilter}"
+                                    rows="5" 
+                                    paginator="true" 
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                    rowsPerPageTemplate="5,10,15"
+                                    var="e" 
+                                    id="usVinc" >
+                        <f:facet name="header">
+                            <p:commandButton icon="ui-icon-refresh" value="Actualizar" update="usVinc" style="margin-left: 10px"/>
+                        </f:facet>
+
+                        <p:column headerText="Nombre Completo" sortBy="#{e.nombreCompleto}" filterBy="#{e.nombreCompleto}" filterMatchMode="contains">
+                            <h:outputText value="#{e.nombreCompleto}" />
+                        </p:column>
+
+                        <p:column headerText="Quitar" style="width :70px;" >
+                            <p:commandButton icon="ui-icon-circle-triangle-n" actionListener="#{mbAplicacion.quitarUsuario(e)}" update="usVinc" />
+                        </p:column>                        
+                    </p:dataTable>
+                </p:dialog>   
+                
+                <p:dialog style="font-size: 80%"
+                          header="Listado de usuarios disponibles"
+                          widgetVar="UsDisp"
+                          showEffect="fade"
+                          hideEffect="fade"
+                          height="200"
+                          width="30%">
+                    <p:dataTable value="#{mbAplicacion.listUsDisp}" filteredValue="#{mbAplicacion.listUsuariosFilter}"
+                                    rows="5" 
+                                    paginator="true" 
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                    rowsPerPageTemplate="5,10,15"
+                                    var="e" 
+                                    id="usDisp" >
+                        <f:facet name="header">
+                            <p:commandButton icon="ui-icon-refresh" value="Actualizar" update="usDisp" style="margin-left: 10px"/>
+                        </f:facet>
+
+                        <p:column headerText="Nombre Completo" sortBy="#{e.nombreCompleto}" filterBy="#{e.nombreCompleto}" filterMatchMode="contains">
+                            <h:outputText value="#{e.nombreCompleto}" />
+                        </p:column>
+
+                        <p:column headerText="Asignar" style="width :70px;" >
+                            <p:commandButton icon="ui-icon-circle-triangle-n" actionListener="#{mbAplicacion.asignarUsuario(e)}" update="usDisp" />
+                        </p:column>                        
+                    </p:dataTable>
+                </p:dialog>                   
+                
+            </h:form>
+            <br></br>
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton icon="ui-icon-check" value="Guardar" action="#{mbAplicacion.update}" update="edit"/>
+                    <p:commandButton icon="ui-icon-cancel" value="Limpiar" style="float: right" >
+                        <p:ajax update="edit" resetValues="true" />
+                    </p:commandButton>
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton icon="ui-icon-arrowreturnthick-1-w" 
+                                     action="#{mbAplicacion.prepareList}" 
+                                     value="Volver" 
+                                     immediate="true" 
+                                     ajax="false"/>
+                </f:facet>
+            </p:toolbar>
+            
+        </p:panel>
+     </ui:define>
+</ui:composition>
+

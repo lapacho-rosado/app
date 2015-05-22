@@ -34,7 +34,12 @@ public class Usuario implements Serializable {
     @Size(message = "El campo Nombre debe tener entre 1 y 20 caracteres", min = 1, max = 20)    
     private String nombre;
     
-    @Column (nullable=false, length=100, unique=true)
+    @Column (nullable=false, length=100)
+    @NotNull(message = "El campo Nombre Completo no puede quedar nulo")
+    @Size(message = "El campo Nombre Completo debe tener entre 1 y 100 caracteres", min = 1, max = 100)    
+    private String nombreCompleto;    
+    
+    @Column (nullable=false, length=100)
     @NotNull(message = "El campo Nombre no puede quedar nulo")
     @Size(message = "El campo Nombre debe tener entre 1 y 100 caracteres", min = 1, max = 100) 
     private String persona;
@@ -44,6 +49,14 @@ public class Usuario implements Serializable {
     
     public Usuario(){
         aplicaciones = new ArrayList();
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
     }
 
     public List<Aplicacion> getAplicaciones() {

@@ -1,9 +1,12 @@
+ar\gob\ambiente\aplicaciones\gestionaplicaciones\util\CriptPass.class
 ar\gob\ambiente\aplicaciones\gestionaplicaciones\facades\AbstractFacade.class
-ar\gob\ambiente\aplicaciones\gestionaplicaciones\mb\MbAplicaciones.class
 ar\gob\ambiente\aplicaciones\gestionaplicaciones\entities\Usuario_.class
-ar\gob\ambiente\aplicaciones\gestionaplicaciones\mb\MbAplicaciones$AplicacionControllerConverter.class
+ar\gob\ambiente\aplicaciones\gestionaplicaciones\mb\MbLogin$ApplicationError.class
 ar\gob\ambiente\aplicaciones\gestionaplicaciones\entities\Aplicacion.class
+ar\gob\ambiente\aplicaciones\gestionaplicaciones\util\LoginFilter.class
 ar\gob\ambiente\aplicaciones\gestionaplicaciones\facades\UsuarioFacade.class
+ar\gob\ambiente\aplicaciones\gestionaplicaciones\util\JsfUtil.class
 ar\gob\ambiente\aplicaciones\gestionaplicaciones\entities\Usuario.class
+ar\gob\ambiente\aplicaciones\gestionaplicaciones\mb\MbLogin.class
 ar\gob\ambiente\aplicaciones\gestionaplicaciones\entities\Aplicacion_.class
 ar\gob\ambiente\aplicaciones\gestionaplicaciones\facades\AplicacionFacade.class

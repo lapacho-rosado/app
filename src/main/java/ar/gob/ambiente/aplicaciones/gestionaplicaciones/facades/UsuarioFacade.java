@@ -45,4 +45,28 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             return null;
         }
     }
+    
+    public boolean noTieneDependencias(Long id){
+        em = getEntityManager();       
+        String queryString = "SELECT app FROM Aplicacion app "
+                + "INNER JOIN ap.usuarios us" 
+                + "WHERE us.id = :id";     
+        Query q = em.createQuery(queryString)
+                .setParameter("id", id);
+        return q.getResultList().isEmpty();
+    }
+    
+    /**
+     * Metodo que verifica si ya existe la entidad con este nombre.
+     * @param nombre: es la cadena que buscara para ver si ya existe en la BDD
+     * @return: devuelve True o False
+     */
+    public boolean noExiste(String nombre){
+        em = getEntityManager();       
+        String queryString = "SELECT us.nombre FROM Usuario us "
+                + "WHERE us.nombre = :nombre ";
+        Query q = em.createQuery(queryString)
+                .setParameter("nombre", nombre);
+        return q.getResultList().isEmpty();
+    }      
 }

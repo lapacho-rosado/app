@@ -7,7 +7,7 @@
 package ar.gob.ambiente.aplicaciones.gestionaplicaciones.mb;
 
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.util.CriptPass;
-import ar.gob.ambiente.aplicaciones.gestionaplicaciones.util.JsfUtil;
+import ar.gob.ambiente.aplicaciones.gestionaplicaciones.util.Ldap;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -56,30 +56,18 @@ public class MbLogin implements Serializable{
     
     public void login(ActionEvent actionEvent) throws NamingException{
         RequestContext context = RequestContext.getCurrentInstance();
-        FacesMessage msg = null;
         Map<String,Object> attrs;
 
-        // autenticamos el usuario y pass recibidos
-        attrs = autenticar(usuario,pass);          
-
+        attrs = autenticar(usuario,pass);  
         if(attrs != null){
             logeado = true;
             displayName = attrs.get("displayName").toString();
-            //JsfUtil.addSuccessMessage("Bienvenid@ " + attrs.get("displayName").toString());
-            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenid@", attrs.get("displayName").toString());
-        }else{
-            logeado = false;
-            //JsfUtil.addErrorMessage("Error de inicio de sesión, Usuario y/o contraseña invalidos");
-            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error de inicio de sesión", "Usuario y/o contraseña invalidos");
-        }
-
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-
-        if(logeado){
             context.addCallbackParam("view", "/gestionAplicaciones");
             context.addCallbackParam("estaLogeado", logeado);
-            guardarCookie();
-        }            
+            guardarCookie();    
+        }else{
+            logeado = false;
+        }
     }
     
     /**
@@ -90,14 +78,15 @@ public class MbLogin implements Serializable{
      * @return 
      */
     private Map<String, Object> autenticar(String user, String pass) throws NamingException{
+        // obtengo la clase para acceder al Active Directory
+        Ldap ldap = new Ldap();
+        
         // parámetros para la conexión al AD
-        String domain = "MEDIOAMBIENTE.GOV.AR";
-        String ldapHost = "ldap://vmad2008.medioambiente.gov.ar";
         String searchBase = "OU=US,DC=MEDIOAMBIENTE,DC=GOV,DC=AR";
         LdapContext ctxGC = null;
 
         // parámtetros para el filtrado y obtención de atributos
-        String returnedAtts[] ={ "sn", "givenName", "name", "userPrincipalName", "displayName", "memberOf", "homedirectory" };
+        String returnedAtts[] ={ "sn", "givenName", "name", "userPrincipalName", "displayName", "homedirectory" };
         String searchFilter = "(&(objectClass=user)(sAMAccountName=" + user + "))";
         
         // creación de search controls
@@ -107,56 +96,40 @@ public class MbLogin implements Serializable{
         // especificamos el alcance de la búsqueda
         searchCtls.setSearchScope(SearchControls.SUBTREE_SCOPE);     
         
-        // seteamos el entorno para realizar la búsqueda
-        Hashtable<String,String> env = new Hashtable<>();
-        env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        env.put(Context.PROVIDER_URL, ldapHost);
-        env.put(Context.SECURITY_AUTHENTICATION, "simple");
-        env.put(Context.SECURITY_PRINCIPAL, user + "@" + domain);
-        env.put(Context.SECURITY_CREDENTIALS, pass);      
-        
         // obtenemos el contexto si el usuario es autenticado
-        try{
-            ctxGC = new InitialLdapContext(env, null);
-            // leemos los atributos del usuario
-            NamingEnumeration<SearchResult> answer = ctxGC.search(searchBase, searchFilter, searchCtls);   
-            
-            if(answer != null){
-                while (answer.hasMoreElements()) {
-                    SearchResult sr = (SearchResult) answer.next();
-                    Attributes attrs = sr.getAttributes();
-                    Map<String, Object> amap = null;
-                    if (attrs != null) {
-                        amap = new HashMap<>();
-                        NamingEnumeration<?> ne = attrs.getAll();
-                        while (ne.hasMore()) {
-                            Attribute attr = (Attribute) ne.next();
-                            if (attr.size() == 1) {
-                                amap.put(attr.getID(), attr.get());
-                            } else {
-                                HashSet<String> s = new HashSet<>();
-                                NamingEnumeration n =  attr.getAll();
-                                while (n.hasMoreElements()) {
-                                    s.add((String)n.nextElement());
-                                }
-                                amap.put(attr.getID(), s);
+        ctxGC = ldap.getContextAuth(user, pass);
+        // leemos los atributos del usuario
+        NamingEnumeration<SearchResult> answer = ctxGC.search(searchBase, searchFilter, searchCtls);   
+
+        if(answer != null){
+            while (answer.hasMoreElements()) {
+                SearchResult sr = (SearchResult) answer.next();
+                Attributes attrs = sr.getAttributes();
+                Map<String, Object> amap = null;
+                if (attrs != null) {
+                    amap = new HashMap<>();
+                    NamingEnumeration<?> ne = attrs.getAll();
+                    while (ne.hasMore()) {
+                        Attribute attr = (Attribute) ne.next();
+                        if (attr.size() == 1) {
+                            amap.put(attr.getID(), attr.get());
+                        } else {
+                            HashSet<String> s = new HashSet<>();
+                            NamingEnumeration n =  attr.getAll();
+                            while (n.hasMoreElements()) {
+                                s.add((String)n.nextElement());
                             }
+                            amap.put(attr.getID(), s);
                         }
-                        ne.close();
                     }
-                    // cerramos el contexto
-                    ctxGC.close(); 
-                    return amap;
-                }          
-            }
-            
-            throw new ApplicationError("Usuario y/o contraseña inválidos");
-            
-        }catch (NamingException | ApplicationError t){
-            handleException(t);
+                    ne.close();
+                }
+                // cerramos el contexto
+                ldap.closeContextAuth();
+                return amap;
+            }          
         }
         return null;
-
     }    
     
     public void logout(){

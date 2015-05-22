@@ -4,18 +4,22 @@
      xmlns="http://www.w3.org/1999/xhtml"
      xmlns:f="http://java.sun.com/jsf/core"
      xmlns:ui="http://java.sun.com/jsf/facelets"
-     xmlns:p="http://primefaces.org/ui">
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:h="http://xmlns.jcp.org/jsf/html">
      <ui:define name="content">
+        <f:metadata>  
+            <f:event listener="#{mbInicio.iniciar}" type="preRenderView"></f:event>  
+        </f:metadata>             
         <p:panel id="listApp" >
 
-            <p:dataTable value="#{mbAplicaciones.listado}" var="e" id="appList" rows="5"
-                         filteredValue="#{mbAplicaciones.listadoFilter}"
+            <p:dataTable value="#{mbInicio.listado}" var="e" id="appList" rows="5"
+                         filteredValue="#{mbInicio.listadoFilter}"
                          paginator="true"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15">
                 <f:facet name="header">
                     #{bundle.ListadoApp}
-                    <p:commandButton icon="ui-icon-refresh" value="Actualizar listado" action="#{mbAplicaciones.prepareList}" update="appList" style="margin-left: 10px"/>
+                    <p:commandButton icon="ui-icon-refresh" value="Actualizar listado" action="#{mbInicio.prepareList}" update="appList" style="margin-left: 10px"/>
                 </f:facet>
 
                 <p:column headerText="#{bundle.AppNombre}" sortBy="#{e.nombre}" filterBy="#{e.nombre}" filterMatchMode="contains">
@@ -30,9 +34,8 @@
                     <p:outputLabel value="#{e.areaReferente}"/>
                 </p:column>  
 
-                <p:column style="width:50px">
-                    <p:commandLink value="Acceder"  action="#{mbAplicaciones.current.url}">
-                    </p:commandLink>                      
+                <p:column style="width:100px">
+                    <h:outputLink value="#{bundle.Servidor}#{e.url}">Acceder</h:outputLink>
                 </p:column>                
             </p:dataTable>                    
 
