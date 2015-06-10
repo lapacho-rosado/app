@@ -91,7 +91,7 @@ public class MbInicio implements Serializable {
             iniciado = login.isLogeado();
             usuario = usFacade.getXNombre(user);
             if(usuario != null){
-                listado = usuario.getAplicaciones();
+                listado = usFacade.getApliaciones(usuario);
             }
         }     
         return listado;

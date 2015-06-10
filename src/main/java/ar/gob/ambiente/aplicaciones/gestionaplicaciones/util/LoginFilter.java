@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ResourceBundle;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -29,7 +30,8 @@ public class LoginFilter implements Filter {
     
     private static final boolean debug = true;
     private FilterConfig filterConfig = null;
-    private static final String nameCookieUrl = "url";
+    private static final String nameCookieUrl = ResourceBundle.getBundle("/Bundle").getString("nameCookieUrl");
+    private static final String rutaLogin = ResourceBundle.getBundle("/Bundle").getString("rutaLogin");
     
     public LoginFilter() {
     }    
@@ -103,26 +105,26 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-            HttpServletRequest req = (HttpServletRequest) request;
-            HttpServletResponse res = (HttpServletResponse) response;
-             // Obtengo el bean que representa el usuario desde el scope sesión
-            MbLogin mbLogin = (MbLogin) req.getSession().getAttribute("mbLogin");
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+         // Obtengo el bean que representa el usuario desde el scope sesión
+        MbLogin mbLogin = (MbLogin) req.getSession().getAttribute("mbLogin");
 
-            //Proceso la URL que está requiriendo el cliente
-            String urlStr = req.getRequestURL().toString().toLowerCase();
+        //Proceso la URL que está requiriendo el cliente
+        String urlStr = req.getRequestURL().toString().toLowerCase();
 
-            //Si no requiere protección continúo normalmente.
-            if (noProteger(urlStr)) {
-              chain.doFilter(request, response);
-              return;
-            }
+        //Si no requiere protección continúo normalmente.
+        if (noProteger(urlStr)) {
+          chain.doFilter(request, response);
+          return;
+        }
 
-            //El usuario no está logueado
+        //El usuario no está logueado
 
-            if (mbLogin == null || !mbLogin.isLogeado()) {
-              res.sendRedirect(req.getContextPath() + "/faces/login.xhtml");
-              return;
-            }
+        if (mbLogin == null || !mbLogin.isLogeado()) {
+          res.sendRedirect(req.getContextPath() + rutaLogin);
+          return;
+        }
 
         //El recurso requiere protección, pero el usuario ya está logueado.
         //Verifico si el usuario solicita acceso a una aplicación de forma directa leyendo la cookie de url
@@ -142,40 +144,6 @@ public class LoginFilter implements Filter {
         }else{
             chain.doFilter(request, response);  
         }
-            
-            
-        /*
-        if (debug) {
-            log("LoginFilter:doFilter()");
-        }
-        
-        doBeforeProcessing(request, response);
-        
-        Throwable problem = null;
-        try {
-            chain.doFilter(request, response);
-        } catch (Throwable t) {
-	    // If an exception is thrown somewhere down the filter chain,
-            // we still want to execute our after processing, and then
-            // rethrow the problem after that.
-            problem = t;
-            t.printStackTrace();
-        }
-        
-        doAfterProcessing(request, response);
-
-	// If there was a problem, we want to rethrow it if it is
-        // a known type, otherwise log it.
-        if (problem != null) {
-            if (problem instanceof ServletException) {
-                throw (ServletException) problem;
-            }
-            if (problem instanceof IOException) {
-                throw (IOException) problem;
-            }
-            sendProcessingError(problem, response);
-        }
-        */
     }
     
     private boolean noProteger(String urlStr) {

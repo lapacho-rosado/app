@@ -6,6 +6,7 @@
 
 package ar.gob.ambiente.aplicaciones.gestionaplicaciones.facades;
 
+import ar.gob.ambiente.aplicaciones.gestionaplicaciones.entities.Aplicacion;
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.entities.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -69,4 +70,19 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
                 .setParameter("nombre", nombre);
         return q.getResultList().isEmpty();
     }      
+    
+    /**
+     * Metodo que verifica si ya existe la entidad con este nombre.
+     * @param us
+     * @return: devuelve True o False
+     */
+    public List<Aplicacion> getApliaciones(Usuario us){
+        em = getEntityManager();       
+        String queryString = "SELECT app FROM Aplicacion app "
+                + "INNER JOIN app.usuarios us "
+                + "WHERE us = :us";
+        Query q = em.createQuery(queryString)
+                .setParameter("us", us);
+        return q.getResultList();
+    }    
 }

@@ -312,7 +312,7 @@ public class MbUsuario implements Serializable{
         Ldap ldap = new Ldap();
         
         // parámetros para la conexión al AD
-        String searchBase = "OU=US,DC=MEDIOAMBIENTE,DC=GOV,DC=AR";
+        String searchBase = "OU=Usuarios de Dominio,DC=MEDIOAMBIENTE,DC=GOV,DC=AR‏";
         LdapContext ctxGC = null;
 
         // parámtetros para el filtrado y obtención de atributos

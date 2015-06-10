@@ -2,6 +2,7 @@
 package ar.gob.ambiente.aplicaciones.gestionaplicaciones.util;
 
 import java.util.Hashtable;
+import java.util.ResourceBundle;
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.ldap.InitialLdapContext;
@@ -12,10 +13,12 @@ import javax.naming.ldap.LdapContext;
  * @author rincostante
  */
 public class Ldap {
-    public static String domain = "MEDIOAMBIENTE.GOV.AR";
-    public static String ldapHost = "ldap://vmad2008.medioambiente.gov.ar";
-    public static String user = "pruebapp";
-    public static String pass = "pruebapp2015*";
+    public static String contextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
+    public static String authenticacion = "simple";
+    public static String domain = ResourceBundle.getBundle("/Bundle").getString("domain");
+    public static String ldapHost = ResourceBundle.getBundle("/Bundle").getString("ldapHost");
+    public static String user = ResourceBundle.getBundle("/Bundle").getString("user");
+    public static String pass = ResourceBundle.getBundle("/Bundle").getString("pass");
     
     private LdapContext ctxGCAuth = null;
     private LdapContext ctxGCSearch = null;
@@ -31,9 +34,9 @@ public class Ldap {
     public LdapContext getContextAuth(String usuario, String contrasenia) throws NamingException{
         if(ctxGCAuth == null){
             // seteo el ambiente para la conexión
-            env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+            env.put(Context.INITIAL_CONTEXT_FACTORY, contextFactory);
             env.put(Context.PROVIDER_URL, ldapHost);
-            env.put(Context.SECURITY_AUTHENTICATION, "simple");
+            env.put(Context.SECURITY_AUTHENTICATION, authenticacion);
             env.put(Context.SECURITY_PRINCIPAL, usuario + "@" + domain);
             env.put(Context.SECURITY_CREDENTIALS, contrasenia);
             
@@ -55,9 +58,9 @@ public class Ldap {
         
         if(ctxGCSearch == null){
             // seteo el ambiente para la conexión
-            env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+            env.put(Context.INITIAL_CONTEXT_FACTORY, contextFactory);
             env.put(Context.PROVIDER_URL, ldapHost);
-            env.put(Context.SECURITY_AUTHENTICATION, "simple");
+            env.put(Context.SECURITY_AUTHENTICATION, authenticacion);
             env.put(Context.SECURITY_PRINCIPAL, user + "@" + domain);
             env.put(Context.SECURITY_CREDENTIALS, pass);
             

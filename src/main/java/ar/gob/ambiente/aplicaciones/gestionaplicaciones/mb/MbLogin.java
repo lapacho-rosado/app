@@ -11,21 +11,19 @@ import ar.gob.ambiente.aplicaciones.gestionaplicaciones.util.Ldap;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
-import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 import javax.servlet.http.HttpSession;
 import org.omnifaces.util.Faces;
@@ -41,8 +39,6 @@ public class MbLogin implements Serializable{
     private String usuario;
     private String pass;
     private String displayName;
-    
-    private String cuqui;
 
     /**
      * Creates a new instance of MbLogin
@@ -80,9 +76,6 @@ public class MbLogin implements Serializable{
     private Map<String, Object> autenticar(String user, String pass) throws NamingException{
         // obtengo la clase para acceder al Active Directory
         Ldap ldap = new Ldap();
-        
-        // parámetros para la conexión al AD
-        String searchBase = "OU=US,DC=MEDIOAMBIENTE,DC=GOV,DC=AR";
         LdapContext ctxGC = null;
 
         // parámtetros para el filtrado y obtención de atributos
@@ -99,6 +92,7 @@ public class MbLogin implements Serializable{
         // obtenemos el contexto si el usuario es autenticado
         ctxGC = ldap.getContextAuth(user, pass);
         // leemos los atributos del usuario
+        String searchBase = "OU=Usuarios de Dominio,DC=MEDIOAMBIENTE,DC=GOV,DC=AR‏";
         NamingEnumeration<SearchResult> answer = ctxGC.search(searchBase, searchFilter, searchCtls);   
 
         if(answer != null){
@@ -138,7 +132,7 @@ public class MbLogin implements Serializable{
         logeado = false;
         
         // elimino la cookie
-        Faces.removeResponseCookie("user", "/");
+        Faces.removeResponseCookie(ResourceBundle.getBundle("/Bundle").getString("nameCookieUser"), "/");
     }   
     
     public void logoutExterno(){
@@ -148,27 +142,15 @@ public class MbLogin implements Serializable{
     }
     
     private void guardarCookie(){
-        String name = "user";
         String value = usuario;
-        int expiry = 60;
+        int expiry = Integer.parseInt(ResourceBundle.getBundle("/Bundle").getString("expira"));
         
         String valueEnc = CriptPass.encriptar(value);
         
-        Faces.addResponseCookie(name, valueEnc, "/", expiry);
+        Faces.addResponseCookie(ResourceBundle.getBundle("/Bundle").getString("nameCookieUser"), valueEnc, "/", expiry);
         
     }
     
-    public void leerCookie(){
-        //CookieHelper cuquiGelper = new CookieHelper();
-        String name = "user";
-        String value;
-        String valueEnc = Faces.getRequestCookie(name);
-        try {
-            value = CriptPass.desencriptar(valueEnc);
-        } catch (Exception ex) {
-            Logger.getLogger(MbLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    } 
     
     /**
      * Método para manejar los errores y enviar mensajes al usuario
@@ -184,14 +166,6 @@ public class MbLogin implements Serializable{
         
         FacesMessage facesMessage = new FacesMessage(message);
         FacesContext.getCurrentInstance().addMessage(null,  facesMessage);
-    }
-
-    public String getCuqui() {
-        return cuqui;
-    }
-
-    public void setCuqui(String cuqui) {
-        this.cuqui = cuqui;
     }
 
     public String getDisplayName() {
