@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -59,6 +60,7 @@ public class Usuario implements Serializable {
         this.nombreCompleto = nombreCompleto;
     }
 
+    @XmlTransient
     public List<Aplicacion> getAplicaciones() {
         return aplicaciones;
     }

@@ -19,6 +19,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -61,6 +62,7 @@ public class Aplicacion implements Serializable {
         usuarios = new ArrayList();
     }
 
+    @XmlTransient
     public List<Usuario> getUsuarios() {
         return usuarios;
     }

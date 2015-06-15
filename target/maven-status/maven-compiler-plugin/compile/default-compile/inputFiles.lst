@@ -6,10 +6,12 @@ C:\Users\rincostante\Documents\NetBeansProjects\gestionAplicaciones\src\main\jav
 C:\Users\rincostante\Documents\NetBeansProjects\gestionAplicaciones\src\main\java\ar\gob\ambiente\aplicaciones\gestionaplicaciones\util\JsfUtil.java
 C:\Users\rincostante\Documents\NetBeansProjects\gestionAplicaciones\src\main\java\ar\gob\ambiente\aplicaciones\gestionaplicaciones\util\Ldap.java
 C:\Users\rincostante\Documents\NetBeansProjects\gestionAplicaciones\src\main\java\ar\gob\ambiente\aplicaciones\gestionaplicaciones\mb\MbLogin.java
+C:\Users\rincostante\Documents\NetBeansProjects\gestionAplicaciones\src\main\java\ar\gob\ambiente\aplicaciones\gestionaplicaciones\servicios\AccesoAppServicio.java
 C:\Users\rincostante\Documents\NetBeansProjects\gestionAplicaciones\src\main\java\ar\gob\ambiente\aplicaciones\gestionaplicaciones\util\LoginFilter.java
 C:\Users\rincostante\Documents\NetBeansProjects\gestionAplicaciones\src\main\java\ar\gob\ambiente\aplicaciones\gestionaplicaciones\entities\Usuario.java
 C:\Users\rincostante\Documents\NetBeansProjects\gestionAplicaciones\src\main\java\ar\gob\ambiente\aplicaciones\gestionaplicaciones\util\CriptPass.java
 C:\Users\rincostante\Documents\NetBeansProjects\gestionAplicaciones\src\main\java\ar\gob\ambiente\aplicaciones\gestionaplicaciones\mb\MbInicio.java
 C:\Users\rincostante\Documents\NetBeansProjects\gestionAplicaciones\src\main\java\ar\gob\ambiente\aplicaciones\gestionaplicaciones\mb\MbUsuario.java
 C:\Users\rincostante\Documents\NetBeansProjects\gestionAplicaciones\src\main\java\ar\gob\ambiente\aplicaciones\gestionaplicaciones\facades\AplicacionFacade.java
+C:\Users\rincostante\Documents\NetBeansProjects\gestionAplicaciones\src\main\java\ar\gob\ambiente\aplicaciones\gestionaplicaciones\ws\AccesoAppWebService.java
 C:\Users\rincostante\Documents\NetBeansProjects\gestionAplicaciones\src\main\java\ar\gob\ambiente\aplicaciones\gestionaplicaciones\util\AjaxExceptionHandler.java

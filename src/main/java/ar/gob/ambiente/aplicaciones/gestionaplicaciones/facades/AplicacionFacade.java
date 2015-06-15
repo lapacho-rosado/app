@@ -7,6 +7,8 @@
 package ar.gob.ambiente.aplicaciones.gestionaplicaciones.facades;
 
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.entities.Aplicacion;
+import ar.gob.ambiente.aplicaciones.gestionaplicaciones.entities.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -72,4 +74,18 @@ public class AplicacionFacade extends AbstractFacade<Aplicacion> {
                 .setParameter("id", id);
         return q.getResultList().isEmpty();
     }      
+    
+    /**
+     * Método que devuelve los usuarios de una aplicación
+     * @param id
+     * @return 
+     */
+    public List<Usuario> getUsXApp(Long id){
+        em = getEntityManager();       
+        String queryString = "SELECT app.usuarios FROM Aplicacion app "
+                + "WHERE app.id = :id";
+        Query q = em.createQuery(queryString)
+                .setParameter("id", id);
+        return q.getResultList();
+    }
 }
