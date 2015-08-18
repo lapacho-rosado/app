@@ -32,6 +32,7 @@ public class MbInicio implements Serializable {
     private List<Aplicacion> listadoFilter;   
     private MbLogin login;
     private boolean iniciado;
+    private List<String> imgApp;
     
     @EJB
     private AplicacionFacade appFacade;    
@@ -81,6 +82,14 @@ public class MbInicio implements Serializable {
             }
         }
     }     
+
+    public List<String> getImgApp() {
+        return imgApp;
+    }
+
+    public void setImgApp(List<String> imgApp) {
+        this.imgApp = imgApp;
+    }
     
     public void setCurrent(Aplicacion current) {
         this.current = current;
@@ -113,7 +122,7 @@ public class MbInicio implements Serializable {
      * @return acción para el listado de entidades a mostrar en el list
      */
     public String prepareList() {
-        return "index";
+        return "/gestionTerritorial";
     }    
         
 }

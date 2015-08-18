@@ -15,52 +15,31 @@
         </f:facet>
     </h:head>
     <h:body>
-        <p:layout fullPage="true">
-            <p:layoutUnit id="top" styleClass="top" position="north" >
-                <h:panelGrid id="topPg" columns="3" styleClass="topPg" >
-                    <img src="../resources/img/sayds_beige.gif" />
-                    <p:outputLabel id="topOl" value="#{bundle.Aplicacion}" styleClass="topOl" style="font-size: xx-large" />
+        <p:graphicImage value="../resources/img/FondoAplicaciones1.jpg" style="position: absolute; left:50%; height: 756px; width:1344px; margin-left:-672px" />
+        <h:form>
+            <br></br>
+            <p:panel style="position: relative; margin-top: 365px; left:50%; width:490px; margin-left:-245px; font-size: 70%" styleClass="frmLogin">
+                <h:panelGrid style="margin: 20px">
+                    <f:facet name="header">
+                        <p:outputLabel value="Ha habido un error en el inicio de sesión. El usuario y/o la contraseña son inválidos." rendered="#{not mbLogin.logeado}" />
+                        <p:outputLabel value="Recuerde que deben corresponder a las credenciales de inicio de sesión en el dominio de la SAyDS." rendered="#{not mbLogin.logeado}" />
+                        <p:outputLabel value="Ha ocurrido un error inesperado. Por favor, consulte a Desarrollo de aplicaciones o reporte el evento a la Mesa de Servicios Informáticos" rendered="#{mbLogin.logeado}" />
+                        <ul>
+                            <li>Navegador: #{header['user-agent']}</li>
+                            <li>Accediendo desde: <a href="#{requestScope['javax.servlet.error.request_uri']}">#{requestScope['javax.servlet.error.request_uri']}</a></li>
+                            <li>Tipo de excepción: #{requestScope['javax.servlet.error.exception_type']}</li>
+                            <li>Mensaje: #{requestScope['javax.servlet.error.message']}</li>
+                        </ul>            
+                    </f:facet>
+                    <f:facet name="footer">
+                        <p:commandButton id="iniciar" value="Volver a intentar" 
+                                         action="#{mbLogin.iniciar}" ajax="false" 
+                                         style="width: 100%" rendered="#{not mbLogin.logeado}" />
+                    </f:facet>
                 </h:panelGrid>
-            </p:layoutUnit>
-            
-            <p:layoutUnit position="center">
-                <h:form>
-                    <br></br>
-                    <p:panel style="position: relative; left:50%; width:490px; margin-left:-245px; font-size: 70%">
-                        <h:panelGrid style="margin: 20px">
-                            <f:facet name="header">
-                                <p:outputLabel value="Ha habido un error en el inicio de sesión. El usuario y/o la contraseña son inválidos." rendered="#{not mbLogin.logeado}" />
-                                <p:outputLabel value="Recuerde que deben corresponder a las credenciales de inicio de sesión en el dominio de la SAyDS." rendered="#{not mbLogin.logeado}" />
-                                <p:outputLabel value="Ha ocurrido un error inesperado. Por favor, consulte a Desarrollo de aplicaciones o reporte el evento a la Mesa de Servicios Informáticos" rendered="#{mbLogin.logeado}" />
-                                <ul>
-                                    <li>Navegador: #{header['user-agent']}</li>
-                                    <li>Accediendo desde: <a href="#{requestScope['javax.servlet.error.request_uri']}">#{requestScope['javax.servlet.error.request_uri']}</a></li>
-                                    <li>Tipo de excepción: #{requestScope['javax.servlet.error.exception_type']}</li>
-                                    <li>Mensaje: #{requestScope['javax.servlet.error.message']}</li>
-                                </ul>            
-                            </f:facet>
-                            <f:facet name="footer">
-                                <p:commandButton id="iniciar" value="Volver a intentar" 
-                                                 action="#{mbLogin.iniciar}" ajax="false" 
-                                                 style="width: 100%" rendered="#{not mbLogin.logeado}" />
-                            </f:facet>
-                        </h:panelGrid>
-                    </p:panel>
-                    <br></br>
-                </h:form>
-            </p:layoutUnit>
-            
-            <p:layoutUnit id="botton" styleClass="botton" position="south" >
-                <p:panel style="background-color: #424242; text-align: center; border: none; height: 100%; border-color: #424242" >
-                    <h:panelGrid id="bottonPg" columns="1" styleClass="bottonPg">
-                        <h:outputLabel styleClass="bottonOl" value="#{bundle.Pie_1}" style="font-size: small"/>
-                        <h:outputLabel styleClass="bottonOl" value="#{bundle.Pie_2}" style="font-size: small"/>
-                        <h:outputLabel styleClass="bottonOl" value="#{bundle.Pie_3}" style="font-size: small"/>
-                        <h:outputLabel styleClass="bottonOl" value="#{bundle.Pie_4}" style="font-size: small"/>
-                    </h:panelGrid>
-                </p:panel>
-            </p:layoutUnit>
-        </p:layout>
+            </p:panel>
+            <br></br>
+        </h:form>
     </h:body>
 </html>
 

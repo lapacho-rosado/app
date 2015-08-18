@@ -11,11 +11,11 @@
             <f:event listener="#{mbLogin.logoutExterno}" type="preRenderView"></f:event>  
         </f:metadata>    
             <h:form>
-                <p:panel style="position: absolute; top:35%; left:50%; width:490px; margin-left:-245px; font-size: 75%; text-align: center">
+                <p:panel style="position: absolute; top:55%; left:50%; width:490px; margin-left:-245px; font-size: 75%; text-align: center" styleClass="frmLogin">
                     <h:panelGrid columns="1" id="bienvenida" style="text-align: center">
                         <f:facet name="header" >
                             <p:outputLabel value="La sesión ha sido cerrada, si desea iniciar otra, por favor, presione el botón de abajo. 
-                                           De lo contrario le recomendamos cerrar la ventana de su navegador." />
+                                           De lo contrario le recomendamos cerrar la ventana de su navegador." style="color: #E6ECF9" />
                         </f:facet>
                         <f:facet name="footer">
                             <p:commandButton id="iniciar" value="Iniciar Sesión" action="#{mbLogin.iniciar}" ajax="false" style="width: 100%" />

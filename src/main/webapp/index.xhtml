@@ -10,9 +10,9 @@
         <f:metadata>  
             <f:event listener="#{mbInicio.iniciar}" type="preRenderView"></f:event>  
         </f:metadata>             
-        <p:panel id="listApp" >
 
-            <p:dataTable value="#{mbInicio.listado}" var="e" id="appList" rows="5"
+            <p:panel id="listApp" >
+		<p:dataTable value="#{mbInicio.listado}" var="e" id="appList" rows="5"
                          filteredValue="#{mbInicio.listadoFilter}"
                          paginator="true"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -37,9 +37,9 @@
                 <p:column style="width:100px">
                     <h:outputLink value="#{bundle.Servidor}#{e.url}">Acceder</h:outputLink>
                 </p:column>                
-            </p:dataTable>                    
+            </p:dataTable>      
+	</p:panel> 
 
-        </p:panel>
      </ui:define>
 </ui:composition>
 
