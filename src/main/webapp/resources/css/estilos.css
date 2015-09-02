@@ -7,9 +7,13 @@ and open the template in the editor.
     Created on : 02-abr-2015, 22:01:29
     Author     : Administrador
 */
+.ui-menubar{
+    background: #A80000 !important; 
+    height: 30px
+}
 
 .top .ui-layout-unit-content{
-   background: #103B80;
+    background: #103B80;
 }
 
 .top{

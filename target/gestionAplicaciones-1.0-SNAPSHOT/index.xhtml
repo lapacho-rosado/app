@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/WEB-INF/facelets/templates/indexTemplate.xhtml"
+<ui:composition template="/WEB-INF/facelets/templates/homeTemplate.xhtml"
      xmlns="http://www.w3.org/1999/xhtml"
      xmlns:f="http://java.sun.com/jsf/core"
      xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -11,35 +11,14 @@
             <f:event listener="#{mbInicio.iniciar}" type="preRenderView"></f:event>  
         </f:metadata>             
 
-            <p:panel id="listApp" >
-		<p:dataTable value="#{mbInicio.listado}" var="e" id="appList" rows="5"
-                         filteredValue="#{mbInicio.listadoFilter}"
-                         paginator="true"
-                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15">
-                <f:facet name="header">
-                    #{bundle.ListadoApp}
-                    <p:commandButton icon="ui-icon-refresh" value="Actualizar listado" action="#{mbInicio.prepareList}" update="appList" style="margin-left: 10px"/>
-                </f:facet>
+         <p:contentFlow value="#{mbInicio.listApp}" var="app" 
+                        style="position: absolute; top:39%; height: 350px; left:50%; width:1200px; margin-left:-600px; background-color: #102554; border-color: #102554" >
+             <p:graphicImage value="/resources/img/#{app.rutaImagen}" styleClass="content" />
+             <p:button value="Ingresar" href="http://localhost:8080#{app.url}" 
+                              style="position: absolute; top:90%; left:50%; width:60px; margin-left:-30px" >
 
-                <p:column headerText="#{bundle.AppNombre}" sortBy="#{e.nombre}" filterBy="#{e.nombre}" filterMatchMode="contains">
-                    <p:outputLabel value="#{e.nombre}"/>
-                </p:column>   
-
-                <p:column headerText="#{bundle.AppDesc}" sortBy="#{e.descripcion}" filterBy="#{e.descripcion}" filterMatchMode="contains">
-                    <p:outputLabel value="#{e.descripcion}"/>
-                </p:column>  
-
-                <p:column headerText="#{bundle.AppArea}" sortBy="#{e.areaReferente}" filterBy="#{e.areaReferente}" filterMatchMode="contains">
-                    <p:outputLabel value="#{e.areaReferente}"/>
-                </p:column>  
-
-                <p:column style="width:100px">
-                    <h:outputLink value="#{bundle.Servidor}#{e.url}">Acceder</h:outputLink>
-                </p:column>                
-            </p:dataTable>      
-	</p:panel> 
+             </p:button >
+         </p:contentFlow>
 
      </ui:define>
 </ui:composition>
-

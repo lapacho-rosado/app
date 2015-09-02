@@ -14,7 +14,7 @@
                 <p:growl id="messages" />
                 <h:panelGrid columns="2">
                     <p:outputLabel value="#{bundle.AppNombre}" for="nombre"/>
-                    <p:inputText id="nombre"
+                    <p:inputText id="nombre" style="width: 350px"
                                  value="#{mbAplicacion.current.nombre}" 
                                  requiredMessage="#{bundle.Required_AppNombre_message}" 
                                  validator="#{mbAplicacion.validarUpdateNombre}"
@@ -23,7 +23,7 @@
                     </p:inputText>  
                     
                     <p:outputLabel value="#{bundle.AppDesc}" for="desc"/>
-                    <p:inputText id="desc"
+                    <p:inputText id="desc" style="width: 350px"
                                  value="#{mbAplicacion.current.descripcion}" 
                                  requiredMessage="#{bundle.Required_AppDesc_message}" 
                                  maxlength="250"
@@ -31,7 +31,7 @@
                     </p:inputText>
                     
                     <p:outputLabel value="#{bundle.AppArea}" for="area"/>
-                    <p:inputText id="area"
+                    <p:inputText id="area" style="width: 350px"
                                  value="#{mbAplicacion.current.areaReferente}" 
                                  requiredMessage="#{bundle.Required_AppArea_message}" 
                                  maxlength="100"
@@ -39,7 +39,7 @@
                     </p:inputText>  
                     
                     <p:outputLabel value="#{bundle.AppUrl}" for="url"/>
-                    <p:inputText id="url"
+                    <p:inputText id="url" style="width: 350px"
                                  value="#{mbAplicacion.current.url}" 
                                  requiredMessage="#{bundle.Required_AppUrl_message}" 
                                  validator="#{mbAplicacion.validarUpdateUrl}"
@@ -58,6 +58,11 @@
                                      onclick="PF('UsDisp').show();" />      
 
                     </h:panelGrid> 
+                    
+                    <f:facet name="footer">
+                        <p:outputLabel value="#{bundle.AppImagen}: " for="img"/>
+                        <p:commandButton id="img" value="Agregar Imagen" action="#{mbAplicacion.verAgregarImagen}" process="@this" />
+                    </f:facet>
                     
                 </h:panelGrid>
                 

@@ -1,5 +1,10 @@
 package ar.gob.ambiente.aplicaciones.gestionaplicaciones.util;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -56,5 +61,43 @@ public class JsfUtil {
         String theId = JsfUtil.getRequestParameter(requestParameterName);
         return converter.getAsObject(FacesContext.getCurrentInstance(), component, theId);
     }
+    
+    /**
+     * Método para copiar un archivo subido, al servidor
+     * @param nombre: Nombre del archivo a copiar
+     * @param in: El inputStream del archivo
+     * @param destino: Ruta en el que se guardará el archivo
+     * @return 
+     */
+    public static Boolean copyFile(String nombre, InputStream in, String destino){
+        try{
+            // escribo el inputStream a un FileOutputStream
+            OutputStream out = new FileOutputStream(new File(destino + nombre));
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            
+            in.close();
+            out.flush();
+            out.close();
+            
+            return true;
+        }catch(IOException e){
+            addErrorMessage("Hubo un error copiando el archivo. " + e.getLocalizedMessage());
+            return false;
+        }
+    }    
 
+    /**
+     * Método para eliminar archivos del servidor
+     * @param path: ruta del archivo con su nombre incluido
+     * @return 
+     */
+    public static boolean deleteFile(String path){
+        File file = new File(path);
+        return file.delete();
+    }    
 }

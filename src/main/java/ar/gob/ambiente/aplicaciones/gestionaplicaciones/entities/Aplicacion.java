@@ -50,6 +50,11 @@ public class Aplicacion implements Serializable {
     @Size(message = "El campo Url debe tener entre 1 y 100 caracteres", min = 1, max = 100)       
     private String url;
     
+    @Column (nullable=false, length=500, unique=true)
+    @NotNull(message = "El campo Ruta Imagen no puede quedar nulo")
+    @Size(message = "El campo Ruta Imagen debe tener entre 1 y 100 caracteres", min = 1, max = 500)       
+    private String rutaImagen;
+    
     @ManyToMany
     @JoinTable(
             name = "aplicacionesXUsuarios",
@@ -60,6 +65,14 @@ public class Aplicacion implements Serializable {
     
     public Aplicacion(){
         usuarios = new ArrayList();
+    }
+
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
     }
 
     @XmlTransient

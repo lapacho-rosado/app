@@ -11,11 +11,14 @@ import ar.gob.ambiente.aplicaciones.gestionaplicaciones.entities.Usuario;
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.facades.AplicacionFacade;
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.facades.UsuarioFacade;
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.util.JsfUtil;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -27,6 +30,9 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpSession;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -328,6 +334,60 @@ public class MbAplicacion implements Serializable{
         current.getUsuarios().remove(us);
         listUsDisp.add(us);
     }    
+    
+    /**
+     * Método para gestionar la imagen asociada a las aplicaciones
+     */
+    public void verAgregarImagen(){
+        Map<String,Object> options = new HashMap<>();
+        options.put("contentWidth", 800);
+        options.put("contentHeight", 250);
+        RequestContext.getCurrentInstance().openDialog("dlgCargarImagen", options, null);
+    }     
+    
+    /**
+     * Método para subir las imágenes de las publicidades
+     * @param event
+     */
+    public void subirImagenes(FileUploadEvent event){
+        if(current.getRutaImagen() == null || current.getRutaImagen().equals("")){
+            try{
+                UploadedFile fileImg = event.getFile();
+                String destino;
+
+                destino = ResourceBundle.getBundle("/Bundle").getString("RutaArchivos");
+
+                if(destino == null){
+                    JsfUtil.addErrorMessage("No se pudo obtener el destino de la imagen.");
+                }else{
+                    // si logré subir el archivo, guardo la ruta
+                    if(JsfUtil.copyFile(fileImg.getFileName(), fileImg.getInputstream(), destino)){
+                        JsfUtil.addSuccessMessage("El archivo " + fileImg.getFileName() + " se ha subido al servidor. "
+                                + "Por favor, actualice el campo de texto para ver la ruta completa");
+                        current.setRutaImagen(fileImg.getFileName()); 
+                    }
+                }
+            }catch(IOException e){
+                JsfUtil.addErrorMessage("Hubo un error subiendo la imagen" + e.getLocalizedMessage());
+            }
+        }else{
+            JsfUtil.addErrorMessage("Ya hay una imagen para esta Publicidad, por vavor elimine la existente y vuelva a intentarlo.");
+        }
+    }
+    
+    /**
+     * Método para eliminar la imagen asociada a las aplicaciones
+     */
+    public void deleteImagen(){
+        String destino;
+        destino = ResourceBundle.getBundle("/Bundle").getString("RutaArchivos");        
+        if(JsfUtil.deleteFile(destino + "/" + current.getRutaImagen())){
+            current.setRutaImagen("");
+            JsfUtil.addSuccessMessage("La imagen ha sido eliminada");
+        }else{
+            JsfUtil.addErrorMessage("No se pudo eliminar la imagen");
+        }
+    }        
     
     
     /*************************
