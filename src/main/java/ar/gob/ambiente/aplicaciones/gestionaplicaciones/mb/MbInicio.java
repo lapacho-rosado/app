@@ -54,7 +54,7 @@ public class MbInicio implements Serializable {
         if(!iniciado){
             ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
             login = (MbLogin)ctx.getSessionMap().get("mbLogin");
-            user = login.getUsuario();
+            if(login != null) user = login.getUsuario();
         }
     }    
     
