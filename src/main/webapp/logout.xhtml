@@ -11,8 +11,11 @@
             <f:event listener="#{mbLogin.logoutExterno}" type="preRenderView"></f:event>  
         </f:metadata>    
             <h:form>
-                <p:panel style="position: absolute; top:55%; left:50%; width:490px; margin-left:-245px; font-size: 75%; text-align: center; border-color: #103B80" 
+                <p:panel style="position: absolute; top:30%; left:50%; width:490px; margin-left:-245px; font-size: 75%; text-align: center; border-color: #103B80" 
                          styleClass="frmLogin">
+                    <h:panelGrid columns="1" >
+                        <img src="#{request.contextPath}/resources/img/Log_Presidencia_MinisterioAmbiente.gif" width="339" height="67" />
+                    </h:panelGrid>
                     <h:panelGrid columns="1" id="bienvenida" style="text-align: center">
                         <f:facet name="header" >
                             <p:outputLabel value="La sesión ha sido cerrada, si desea iniciar otra, por favor, presione el botón de abajo. 

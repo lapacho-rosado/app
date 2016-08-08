@@ -11,18 +11,18 @@
                 font-size: 90%;
             }
         </style>
-        <link href="/resources/css/estilos.css" type="text/css" rel="stylesheet" />
+        <link href="#{request.contextPath}/resources/css/estilos.css" type="text/css" rel="stylesheet" />
         <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/img/favicon.ico"/>
         <f:facet name="first">
             <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-            <title>SAyDS - Aplicaciones</title>
+            <title>MAyDS - Aplicaciones</title>
         </f:facet>
     </h:head>
     <h:body>
         <p:layout fullPage="true">
             
             <p:layoutUnit position="center">
-                <p:graphicImage value="/resources/img/Fondo_1600x800.jpg" style="position: absolute; left:50%; margin-left:-800px" />
+                <p:graphicImage value="/resources/img/Fondo_1600x800_liso.jpg" style="position: absolute; left:50%; margin-left:-800px" />
                 <h:form>
                     <p:menubar style=" height: 30px; border-color: #103B80; color: whitesmoke; background: #103B80 !important">
                         <p:menuitem value="Inicio |" url="#{bundle.Servidor}#{bundle.RutaAplicacion}" style="color: whitesmoke" />
