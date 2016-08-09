@@ -4,7 +4,7 @@
 	Distingue dos roles de usuarios: el usuario común que solo puede validar sus credenciales y acceder al listado con todas las aplicaciones que tenga disponibles, y el administrador, que además de tener las funcionalidades del usuario común, también podrá gestionar las aplicciones existentes con la correspondiente gestión de usuarios y agregar nuevas.
 
 	Para más datos se recomienda acceder a la documentación de la aplicación en \\vmfs\Desarrollo\Servicios\gestionAplicaciones.
-	
+
 
 Ambiente:
 ---------
@@ -28,4 +28,10 @@ Datos:
 ------
 
 	Deberá crearse la base de datos gestionAplicaciones en el servidor local de Postgres y los permisos según se especifica en el archivo glassfish-resource.xml
-	Los backup de la base se encuentran en \\vmfs\Desarrollo\Servicios\gestionAplicaciones\base y los scripts en \\vmfs\Desarrollo\Servicios\gestionAplicaciones\base\scripts	
+	Los backup de la base se encuentran en \\vmfs\Desarrollo\Servicios\gestionAplicaciones\base y los scripts en \\vmfs\Desarrollo\Servicios\gestionAplicaciones\base\scripts
+
+
+Servicios:
+----------
+	
+	Los archivos xml correspondientes al contrato del servicio web que brinda la aplicación para gestionar el logeo de otras aplicaciones del mismo entorno, se encuentran en \\vmfs\Desarrollo\Servicios\gestionAplicaciones\xml_ws	
