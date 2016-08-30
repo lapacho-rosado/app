@@ -3,18 +3,18 @@ Esta aplicación tiene por objeto principal gestionar las aplicaciones a las cua
 
 Distingue dos roles de usuarios: el usuario común que solo puede validar sus credenciales y acceder al listado con todas las aplicaciones que tenga disponibles, y el administrador, que además de tener las funcionalidades del usuario común, también podrá gestionar las aplicciones existentes con la correspondiente gestión de usuarios y agregar nuevas.
 
-Para más datos se recomienda acceder a la documentación de la aplicación en \\vmfs\Desarrollo\Servicios\gestionAplicaciones.
+Para más datos se recomienda acceder a la documentación de la aplicación en `doc\gestionAplicaciones`.
 
 
 Arquitectura general:
 ---------------------
 
-En \\vmfs\Desarrollo\Servicios\gestionAplicaciones se puede acceder a arqGral.vsd que ilustra la dependencia entre las aplicaciones desarrolladas en java. El mismo archivo se agrega en este repositorio.
+En `doc/gestionAplicaciones` se puede acceder a `arqGral.vsd` que ilustra la dependencia entre las aplicaciones desarrolladas en java. El mismo archivo se agrega en este repositorio.
 
 Ambiente:
 ---------
 
-Para conocer las características del ambiente para el despliegue de la aplicación se recomiendo leer la documentación alojada en \\vmfs\Desarrollo\Aplicaciones\javaApp
+Para conocer las características del ambiente para el despliegue de la aplicación se recomienda leer la documentación alojada en `doc/entornoLocal.txt` y `doc/frameworks_tecnologias.txt`
 
 
 Configuraciones:
@@ -33,7 +33,6 @@ Datos:
 ------
 
 Deberá crearse la base de datos gestionAplicaciones en el servidor local de Postgres y los permisos según se especifica en el archivo glassfish-resource.xml
-Los backup de la base se encuentran en \\vmfs\Desarrollo\Servicios\gestionAplicaciones\base y los scripts en \\vmfs\Desarrollo\Servicios\gestionAplicaciones\base\scripts
 
 
 Servicios:

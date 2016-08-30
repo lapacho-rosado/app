@@ -1,0 +1,25 @@
+Descripción General:
+--------------------
+	
+	Las aplicaciones desarrolladas en java, hasta la fecha (08/2016) se componen principalmente de aplicaciones web (.war), en algunos casos con un backend desacoplado constituido por un módulo EJB y en otros incluyendo su propio backend y de módulos EJB. Eventualmente aplicaciones simples de escritorio principalmente para pruebas.
+
+	El motor de base de datos empleado es PostGres en su versión 9.3, utilizando PgAdmin III como interfase gráfica de administración.
+
+------------------------------------------------------------------------------
+
+Ambiente:
+---------
+	
+	JVM: se utiliza la versión 1.7.0_51
+	IDE: NetBeans 7.4
+	Server: GlassFish 4.0
+	BD: Postgres 9.3
+
+
+Tecnología asociada:
+--------------------
+
+	Maven: versión 3.2.1 para la gestión dedependencias, versiones, arquetipos y proyectos.
+	CygWin: versión 1.7.28-2 para la habilitación de la terminar del NetBeans para la gestión de Maven.
+	PgAdmin III para la gestión graáfica del motor de base de datos.
+

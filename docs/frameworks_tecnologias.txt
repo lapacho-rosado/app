@@ -1,0 +1,28 @@
+Presentación:
+-------------
+
+	Para la capa de presentación de las UI se utiliza JSF 2.2. Como con el agregado del componente PrimeFaces (5.0 o 5.3) Y en aplicaciones con UI de acceso público se utilizó además Bootsfaces en su versión 0.8.1.
+
+
+Persistencia:
+-------------
+
+	Para la persistencia se utiliza JPA con las librerías de org.eclipse.persistence 2.5.0
+
+
+servicios web:
+--------------
+
+	Los servicios web se implementan sobre protocolo SOAP mediante jaxws
+
+
+Reportes:
+---------
+
+	Para la gestión de reportes se utiliza JasperReports en su versión 5.5.0 con todas sus dependencias
+
+
+Configuración:
+--------------
+
+	Dado que se utilizar Maven para todas las aplicaciones, todas las dependencias vinculadas a cada aplicación se especifican en el archivo pom.xml de cada proyecto.
