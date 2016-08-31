@@ -1,5 +1,5 @@
 ---
---- Creaci髇 de tablas
+--- Creaci贸n de tablas
 ---
 CREATE TABLE aplicacion (
     id integer NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE usuario (
 );
 
 ---
----Creaci髇 de secuencias
+---Creaci贸n de secuencias
 ---
 
 CREATE SEQUENCE aplicacion_id_seq
@@ -42,17 +42,17 @@ CREATE SEQUENCE usuario_id_seq
 
 ---
 --- Inserts
---- (Modificar el insert en la tabla 'usuario' seg鷑 corresponda)
+--- (Modificar el insert en la tabla 'usuario' seg贸n corresponda)
 ---
 
-INSERT INTO aplicacion VALUES (1, 'CI - Desarrollo de Aplicaciones', 'Aplicaci髇 para la gesti髇 de todas las aplicaciones de la SAyDS', 'Gesti髇 de Aplicaciones', '/gestionAplicaciones', 'AppIn.jpg');
-INSERT INTO aplicacion VALUES (2, 'CI - Desarrollo de Aplicaciones', 'Aplicaci髇 de prueba para sonsumir SSO', 'App Prueba Cliente', '/appJsfClient', 'AppVeg.jpg');
-INSERT INTO aplicacion VALUES (3, 'CI - Desarrollo de Aplicaciones', 'Aplicaci髇 de administraci髇 del servicio de Centros Poblados', 'Gesti髇 Territorial', '/gestionTerritorial', 'AppIn.jpg');
-INSERT INTO aplicacion VALUES (4, 'CI - Desarrollo de Aplicaciones', 'Aplicaci髇 de administraci髇 del servicio de Especies Vegetales', 'Especies Vegetales', '/especiesForestales', 'AppVeg.jpg');
-INSERT INTO aplicacion VALUES (5, 'Presupuesto', 'Aplicaci髇 para la planificaci髇 y control preupuestarios', 'Gesti髇 Presupuestaria', '/gestionPresupuestaria', 'AppIn.jpg');
-INSERT INTO aplicacion VALUES (6, 'CI - Desarrollo de Aplicaciones', 'Aplicaci髇 de administraci髇 del Servicio de Gesti髇 de Tr醡ites', 'Gesti髇 de Tr醡ites', '/gestionTramites', 'AppTrm.jpg');
-INSERT INTO aplicacion VALUES (7, 'CI - Desarrollo de Aplicaciones', 'Aplicaci髇 de administraci髇 del servicio de Gesti髇 de Personas', 'Gesti髇 de Personas', '/gestionPersonas', 'AppPrs.jpg');
-INSERT INTO aplicacion VALUES (8, 'DPyRA', 'Interface web para usuarios internos de gesti髇 de efluentes l韖uidos', 'gestionEfluentesLiquidos-webInt', '/gestionEfluentesLiquidos-webInt', 'superni帽a.jpg');
+INSERT INTO aplicacion VALUES (1, 'CI - Desarrollo de Aplicaciones', 'Aplicaci贸n para la gesti贸n de todas las aplicaciones de la SAyDS', 'Gesti贸n de Aplicaciones', '/gestionAplicaciones', 'AppIn.jpg');
+INSERT INTO aplicacion VALUES (2, 'CI - Desarrollo de Aplicaciones', 'Aplicaci贸n de prueba para sonsumir SSO', 'App Prueba Cliente', '/appJsfClient', 'AppVeg.jpg');
+INSERT INTO aplicacion VALUES (3, 'CI - Desarrollo de Aplicaciones', 'Aplicaci贸n de administraci贸n del servicio de Centros Poblados', 'Gesti贸n Territorial', '/gestionTerritorial', 'AppIn.jpg');
+INSERT INTO aplicacion VALUES (4, 'CI - Desarrollo de Aplicaciones', 'Aplicaci贸n de administraci贸n del servicio de Especies Vegetales', 'Especies Vegetales', '/especiesForestales', 'AppVeg.jpg');
+INSERT INTO aplicacion VALUES (5, 'Presupuesto', 'Aplicaci贸n para la planificaci贸n y control preupuestarios', 'Gesti贸n Presupuestaria', '/gestionPresupuestaria', 'AppIn.jpg');
+INSERT INTO aplicacion VALUES (6, 'CI - Desarrollo de Aplicaciones', 'Aplicaci贸n de administraci贸n del Servicio de Gesti贸n de Tr贸mites', 'Gesti贸n de Tr贸mites', '/gestionTramites', 'AppTrm.jpg');
+INSERT INTO aplicacion VALUES (7, 'CI - Desarrollo de Aplicaciones', 'Aplicaci贸n de administraci贸n del servicio de Gesti贸n de Personas', 'Gesti贸n de Personas', '/gestionPersonas', 'AppPrs.jpg');
+INSERT INTO aplicacion VALUES (8, 'DPyRA', 'Interface web para usuarios internos de gesti贸n de efluentes s贸quidos', 'gestionEfluentesLiquidos-webInt', '/gestionEfluentesLiquidos-webInt', 'superni帽a.jpg');
 
 
 --- Modificar esta sentencia
