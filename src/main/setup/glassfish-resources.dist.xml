@@ -44,13 +44,13 @@
 		res-type="javax.sql.DataSource" statement-timeout-in-seconds="-1"
 		steady-pool-size="8" validate-atmost-once-period-in-seconds="0"
 		wrap-jdbc-objects="false">
-		<property name="serverName" value="127.0.0.1" />
+		<property name="serverName" value="192.168.1.42" />
 		<property name="portNumber" value="5432" />
 		<property name="databaseName" value="gestionaplicaciones" />
 		<property name="User" value="" />
 		<property name="Password" value="" />
 		<property name="URL"
-			value="jdbc:postgresql://127.0.0.1:5432/gestionaplicaciones" />
+			value="jdbc:postgresql://192.168.1.42:5432/gestionaplicaciones" />
 		<property name="driverClass" value="org.postgresql.Driver" />
 	</jdbc-connection-pool>
 	<jdbc-resource enabled="true" jndi-name="gestAppRemotaNDI"
