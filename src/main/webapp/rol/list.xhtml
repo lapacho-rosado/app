@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/facelets/templates/appTemplate.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+     <ui:define name="content">          
+        <p:panel id="listRol" >
+
+            <p:dataTable value="#{mbRol.listado}" var="e" id="rolList" rows="5"
+                         filteredValue="#{mbRol.listFilter}"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+                <f:facet name="header">
+                    #{bundle.ListadoRol}
+                    <p:columnToggler datasource="rolList" trigger="toggler" />
+                    <p:commandButton id="toggler" type="button" value="Columnas" icon="ui-icon-calculator" style="margin-left: 10px" />
+                    <p:commandButton icon="ui-icon-refresh" value="Actualizar listado" action="#{mbRol.prepareList}" update="rolList" style="margin-left: 10px"/>
+                    <p:commandButton icon="ui-icon-newwin" value="Agregar nuevo" action="#{mbRol.prepareCreate}" ajax="false" />
+                </f:facet>
+
+                <p:column headerText="#{bundle.RolNombre}" sortBy="#{e.nombre}" filterBy="#{e.nombre}" filterMatchMode="contains">
+                    <p:outputLabel value="#{e.nombre}"/>
+                </p:column>   
+
+                <p:column headerText="Acciones" style="width:110px">
+                    <p:growl id="messages" showDetail="true" />                           
+                    <p:commandButton icon="ui-icon-zoomin" action="#{mbRol.prepareView}" title="Ver Detalle">
+                        <f:setPropertyActionListener value="#{e}" target="#{mbRol.current}" />  
+                    </p:commandButton>
+
+                    <p:commandButton icon="ui-icon-pencil" action="#{mbRol.prepareEdit}" title="Editar" >
+                        <f:setPropertyActionListener value="#{e}" target="#{mbRol.current}" /> 
+                    </p:commandButton>
+
+                    <p:commandButton icon="ui-icon-close" action="#{mbRol.prepareDestroy}" title="Eliminar" update="rolList">
+                        <f:setPropertyActionListener value="#{e}" target="#{mbRol.current}" />
+                        <p:confirm header="Confirmar" message="¿Desea eliminar a este Rol?" icon="ui-icon-alert" />
+                    </p:commandButton>                
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>      
+                </p:column>              
+            </p:dataTable>                    
+
+        </p:panel>
+     </ui:define>
+</ui:composition>
+

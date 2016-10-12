@@ -12,6 +12,15 @@
             <p:panel id="pnEdit" >
                 <p:growl id="messages" />
                 <h:panelGrid columns="3">
+                    <p:outputLabel value="#{bundle.UsRol}: " for="rolList"/>
+                    <p:selectOneMenu id="rolList" value="#{mbUsuario.strRol}"  
+                                     requiredMessage="#{bundle.UsRolRequired}" required="true">
+                        <f:selectItem itemLabel="Seleccione el Rol" itemValue="" noSelectionOption="true"/>
+                        <f:selectItems value="#{mbUsuario.listRoles}" var="rol" itemLabel="#{rol.nombre}" itemValue="#{rol.nombre}"/>
+                    </p:selectOneMenu>   
+                    
+                    <p:outputLabel value="" />
+                    
                     <p:outputLabel value="#{bundle.UsNombreABuscar}: " for="nombre"/>
                     <p:inputText id="nombre" style="width: 200px"
                                  value="#{mbUsuario.usABuscar}" 
@@ -22,9 +31,10 @@
                                      update="nombreCompleto" style="margin-left: 10px"/>
                     
                     <p:outputLabel value="#{bundle.UsNombreCompleto}: " for="nombreCompleto"/>
-                    <p:inputText id="nombreCompleto" style="width: 200px"
-                                 value="#{mbUsuario.usRetornadoAD}" >
-                    </p:inputText>  
+                    <p:inputText id="nombreCompleto" style="width: 200px" disabled="true" 
+                                 requiredMessage="El campo Nombre completo es obligatorio" 
+                                 required="true" value="#{mbUsuario.usRetornadoAD}" >
+                    </p:inputText> 
 
                 </h:panelGrid>
             </p:panel>    

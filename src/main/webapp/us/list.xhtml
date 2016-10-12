@@ -27,6 +27,10 @@
                 <p:column headerText="#{bundle.UsNombreCompleto}" sortBy="#{e.nombreCompleto}" filterBy="#{e.nombreCompleto}" filterMatchMode="contains">
                     <p:outputLabel value="#{e.nombreCompleto}"/>
                 </p:column>   
+                
+                <p:column headerText="#{bundle.UsRol}" sortBy="#{e.rol.nombre}" filterBy="#{e.rol.nombre}" filterMatchMode="contains">
+                    <p:outputLabel value="#{e.rol.nombre}"/>
+                </p:column> 
 
                 <p:column headerText="Acciones" style="width:110px">
                     <p:growl id="messages" showDetail="true" />                           

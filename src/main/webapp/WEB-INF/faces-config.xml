@@ -39,4 +39,9 @@
         <managed-bean-class>ar.gob.ambiente.aplicaciones.gestionaplicaciones.mb.MbUsuario</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>mbRol</managed-bean-name>
+        <managed-bean-class>ar.gob.ambiente.aplicaciones.gestionaplicaciones.mb.MbRol</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>

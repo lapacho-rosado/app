@@ -68,7 +68,7 @@ public class AplicacionFacade extends AbstractFacade<Aplicacion> {
     public boolean noTieneDependencias(Long id){
         em = getEntityManager();       
         String queryString = "SELECT us FROM Usuario us "
-                + "INNER JOIN us.aplicaciones app" 
+                + "INNER JOIN us.aplicaciones app " 
                 + "WHERE app.id = :id";      
         Query q = em.createQuery(queryString)
                 .setParameter("id", id);

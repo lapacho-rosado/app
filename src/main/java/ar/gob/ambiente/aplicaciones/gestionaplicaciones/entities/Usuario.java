@@ -14,7 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
@@ -40,16 +42,23 @@ public class Usuario implements Serializable {
     @Size(message = "El campo Nombre Completo debe tener entre 1 y 100 caracteres", min = 1, max = 100)    
     private String nombreCompleto;    
     
-    @Column (nullable=false, length=100)
-    @NotNull(message = "El campo Nombre no puede quedar nulo")
-    @Size(message = "El campo Nombre debe tener entre 1 y 100 caracteres", min = 1, max = 100) 
-    private String persona;
+    @ManyToOne
+    @JoinColumn(name="rol_id")
+    private Rol rol;    
     
     @ManyToMany(mappedBy = "usuarios")
     private List<Aplicacion> aplicaciones;    
     
     public Usuario(){
         aplicaciones = new ArrayList();
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public String getNombreCompleto() {
@@ -75,14 +84,6 @@ public class Usuario implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getPersona() {
-        return persona;
-    }
-
-    public void setPersona(String persona) {
-        this.persona = persona;
     }
 
     public Long getId() {

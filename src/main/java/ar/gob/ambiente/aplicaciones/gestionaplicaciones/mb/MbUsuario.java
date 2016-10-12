@@ -6,7 +6,9 @@
 
 package ar.gob.ambiente.aplicaciones.gestionaplicaciones.mb;
 
+import ar.gob.ambiente.aplicaciones.gestionaplicaciones.entities.Rol;
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.entities.Usuario;
+import ar.gob.ambiente.aplicaciones.gestionaplicaciones.facades.RolFacade;
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.facades.UsuarioFacade;
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.util.JsfUtil;
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.util.Ldap;
@@ -44,18 +46,38 @@ public class MbUsuario implements Serializable{
     private Usuario current;
     private List<Usuario> listado;
     private List<Usuario> listadoFilter;   
+    private List<Rol> listRoles;
     private MbLogin login;
     private boolean iniciado;    
     private String usABuscar;
     private String usRetornadoAD;
+    private String strRol;
     
     @EJB
-    private UsuarioFacade usFacade;    
+    private UsuarioFacade usFacade;  
+    @EJB
+    private RolFacade rolFacade;
     
     /**
      * Creates a new instance of MbUsuario
      */
     public MbUsuario() {
+    }
+
+    public String getStrRol() {
+        return strRol;
+    }
+
+    public void setStrRol(String strRol) {
+        this.strRol = strRol;
+    }
+
+    public List<Rol> getListRoles() {
+        return listRoles;
+    }
+
+    public void setListRoles(List<Rol> listRoles) {
+        this.listRoles = listRoles;
     }
 
     public String getUsRetornadoAD() {
@@ -153,6 +175,7 @@ public class MbUsuario implements Serializable{
      * @return acción para el listado de entidades
      */
     public String prepareList() {
+        recreateModel();
         return "list";
     }     
     
@@ -161,10 +184,9 @@ public class MbUsuario implements Serializable{
      * @return 
      */
     public String prepareCreate() {
-        // actualizo el modelo
-        recreateModel();
         // seteo la entidad actual
         current = new Usuario();
+        listRoles = rolFacade.findAll();
         return "new";
     }    
     
@@ -178,7 +200,6 @@ public class MbUsuario implements Serializable{
         if (libre){
             // Elimina
             performDestroy();
-            recreateModel();
         }else{
             //No Elimina 
             JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("UsNonDeletable"));
@@ -197,9 +218,10 @@ public class MbUsuario implements Serializable{
      * @return acción para la edición de la entidad
      */
     public String prepareEdit() {
-        // actualizo el modelo
-        recreateModel();
+        strRol = current.getRol().getNombre();
         usABuscar = current.getNombre();
+        listRoles = rolFacade.findAll();
+        usRetornadoAD = current.getNombreCompleto();
         return "edit";
     }   
     
@@ -243,7 +265,9 @@ public class MbUsuario implements Serializable{
     public String create() {
         current.setNombre(usABuscar);
         current.setNombreCompleto(usRetornadoAD);
-        current.setPersona("NN");
+        
+        // asigno el Rol (por alguna razón no está reconociendo el convert para el rol)
+        current.setRol(rolFacade.getXNombre(strRol));
         
         // valido acá porque en el formulario me validaría dos veces
         if(!getFacade().noExiste(current.getNombre())){
@@ -273,6 +297,8 @@ public class MbUsuario implements Serializable{
             }
         }        
         try {
+            // asigno el Rol (por alguna razón no está reconociendo el convert para el rol)
+            current.setRol(rolFacade.getXNombre(strRol));            
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UsActualizado"));
             return "view";
@@ -290,6 +316,7 @@ public class MbUsuario implements Serializable{
         listado = null;
         usABuscar = "";
         usRetornadoAD = "";
+        strRol = "";
     }        
     
     /**
@@ -383,6 +410,10 @@ public class MbUsuario implements Serializable{
         return getFacade().find(id);
     }
     
+    public Rol getRol(java.lang.Long id) {
+        return rolFacade.find(id);
+    }
+    
     
     /*********************
     ** Métodos privados **
@@ -459,5 +490,5 @@ public class MbUsuario implements Serializable{
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Usuario.class.getName());
             }
         }
-    }               
+    }    
 }

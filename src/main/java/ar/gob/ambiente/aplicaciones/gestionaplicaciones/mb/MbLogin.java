@@ -6,6 +6,8 @@
 
 package ar.gob.ambiente.aplicaciones.gestionaplicaciones.mb;
 
+import ar.gob.ambiente.aplicaciones.gestionaplicaciones.entities.Usuario;
+import ar.gob.ambiente.aplicaciones.gestionaplicaciones.facades.UsuarioFacade;
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.util.CriptPass;
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.util.Ldap;
 import java.io.Serializable;
@@ -13,6 +15,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -37,6 +40,10 @@ public class MbLogin implements Serializable{
     private String usuario;
     private String pass;
     private String displayName;
+    private Usuario usLogueado;
+    
+    @EJB
+    private UsuarioFacade usuarioFacade;    
 
     /**
      * Creates a new instance of MbLogin
@@ -56,6 +63,8 @@ public class MbLogin implements Serializable{
         if(attrs != null){
             logeado = true;
             displayName = attrs.get("displayName").toString();
+            // guardo el usuario logueado
+            usLogueado = usuarioFacade.getXNombre(usuario);
             context.addCallbackParam("view", "/gestionAplicaciones");
             context.addCallbackParam("estaLogeado", logeado);
             guardarCookie();    
@@ -164,6 +173,14 @@ public class MbLogin implements Serializable{
         
         FacesMessage facesMessage = new FacesMessage(message);
         FacesContext.getCurrentInstance().addMessage(null,  facesMessage);
+    }
+
+    public Usuario getUsLogueado() {
+        return usLogueado;
+    }
+
+    public void setUsLogueado(Usuario usLogueado) {
+        this.usLogueado = usLogueado;
     }
 
     public String getDisplayName() {

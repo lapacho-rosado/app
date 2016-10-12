@@ -169,7 +169,8 @@ public class MbAplicacion implements Serializable{
     public String prepareList() {     
         if(listUsDisp != null){
             listUsDisp.clear();
-        }        
+        } 
+        recreateModel();
         return "list";
     } 
     
@@ -195,7 +196,6 @@ public class MbAplicacion implements Serializable{
         if (libre){
             // Elimina
             performDestroy();
-            recreateModel();
         }else{
             //No Elimina 
             JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("AppNonDeletable"));

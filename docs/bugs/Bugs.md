@@ -15,3 +15,6 @@ Exception Description: Syntax error parsing [SELECT app FROM Aplicacion app INNE
 [68, 69] The identification variable '=' cannot be a reserved word.
 [73, 73] An identification variable must be provided for a range variable declaration.
 
+Se resolvió este bug y otros similares (2016/10/04)
+===================================================
+
