@@ -6,21 +6,24 @@
 
 package ar.gob.ambiente.aplicaciones.gestionaplicaciones.ws;
 
-import ar.gob.ambiente.aplicaciones.gestionaplicaciones.entities.Aplicacion;
-import ar.gob.ambiente.aplicaciones.gestionaplicaciones.entities.Usuario;
-import ar.gob.ambiente.aplicaciones.gestionaplicaciones.servicios.AccesoAppServicio;
 import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
+import ar.gob.ambiente.aplicaciones.gestionaplicaciones.entities.Aplicacion;
+import ar.gob.ambiente.aplicaciones.gestionaplicaciones.entities.Usuario;
+import ar.gob.ambiente.aplicaciones.gestionaplicaciones.servicios.AccesoAppServicio;
+
 /**
  *
  * @author rincostante
  */
 @WebService(serviceName = "AccesoAppWebService")
+@WebContext( contextRoot = "/webservices" , urlPattern="/HelloWorldService" )
 @Stateless()
 public class AccesoAppWebService {
     
