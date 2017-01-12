@@ -23,7 +23,6 @@ import ar.gob.ambiente.aplicaciones.gestionaplicaciones.servicios.AccesoAppServi
  * @author rincostante
  */
 @WebService(serviceName = "AccesoAppWebService")
-@WebContext( contextRoot = "/webservices" , urlPattern="/HelloWorldService" )
 @Stateless()
 public class AccesoAppWebService {
     
