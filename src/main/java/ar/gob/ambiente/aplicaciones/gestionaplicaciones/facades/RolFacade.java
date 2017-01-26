@@ -14,7 +14,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class RolFacade extends AbstractFacade<Rol> {
-    @PersistenceContext(unitName = "ar.gob.ambiente.aplicaciones_gestionAplicaciones_war_1.0-SNAPSHOTPU")
+    @PersistenceContext(unitName = "gestionAplicaciones-PU")
     private EntityManager em;
 
     @Override
