@@ -9,7 +9,7 @@
 	<name>gestionAplicaciones</name>
 	<properties>
             <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-            <version.jboss.bom>10.0.0.Final</version.jboss.bom>
+            <version.jboss.bom>10.1.0.Final</version.jboss.bom>
             <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
             <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
 	</properties>
