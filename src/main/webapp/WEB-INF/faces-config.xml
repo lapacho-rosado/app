@@ -11,6 +11,10 @@
             <base-name>/Bundle</base-name>
             <var>bundle</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/Config</base-name>
+            <var>config</var>
+        </resource-bundle>
     </application>    
     
     <factory>

@@ -25,7 +25,7 @@
                 <p:graphicImage value="/resources/img/Fondo_1600x800_liso.jpg" style="position: absolute; left:50%; margin-left:-800px" />
                 <h:form>
                     <p:menubar style=" height: 30px; border-color: #103B80; color: whitesmoke; background: #103B80 !important">
-                        <p:menuitem value="Inicio |" url="#{bundle.Servidor}#{bundle.RutaAplicacion}" style="color: whitesmoke" 
+                        <p:menuitem value="Inicio |" url="#{config.Servidor}#{bundle.RutaAplicacion}" style="color: whitesmoke" 
                                     rendered="#{mbLogin.usLogueado.rol.nombre eq 'Administrador'}"  />
                         <p:menuitem value="Aplicaciones |" url="#{bundle.RaizAplicacion}" style="color: whitesmoke" 
                                     rendered="#{mbLogin.usLogueado.rol.nombre eq 'Administrador'}" />

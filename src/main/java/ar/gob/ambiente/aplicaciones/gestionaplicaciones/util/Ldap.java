@@ -15,10 +15,10 @@ import javax.naming.ldap.LdapContext;
 public class Ldap {
     public static String contextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
     public static String authenticacion = "simple";
-    public static String domain = ResourceBundle.getBundle("/Bundle").getString("domain");
-    public static String ldapHost = ResourceBundle.getBundle("/Bundle").getString("ldapHost");
-    public static String user = ResourceBundle.getBundle("/Bundle").getString("user");
-    public static String pass = ResourceBundle.getBundle("/Bundle").getString("pass");
+    public static String domain = ResourceBundle.getBundle("/Config").getString("domain");
+    public static String ldapHost = ResourceBundle.getBundle("/Config").getString("ldapHost");
+    public static String user = ResourceBundle.getBundle("/Config").getString("user");
+    public static String pass = ResourceBundle.getBundle("/Config").getString("pass");
     
     private LdapContext ctxGCAuth = null;
     private LdapContext ctxGCSearch = null;
