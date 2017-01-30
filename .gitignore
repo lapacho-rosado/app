@@ -15,7 +15,7 @@ target/
 *.db
 
 # Exception dbconnectors
-!docs/db-connectors/*.jar
+!lib/*.jar
  
 ######################
 # Windows
