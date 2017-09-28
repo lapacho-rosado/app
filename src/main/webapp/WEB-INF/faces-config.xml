@@ -15,6 +15,9 @@
             <base-name>/Config</base-name>
             <var>config</var>
         </resource-bundle>
+       <locale-config>
+            <default-locale>es</default-locale>
+       </locale-config>
     </application>    
     
     <factory>
