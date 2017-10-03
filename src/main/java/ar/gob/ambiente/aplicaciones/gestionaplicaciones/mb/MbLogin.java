@@ -10,6 +10,7 @@ import ar.gob.ambiente.aplicaciones.gestionaplicaciones.entities.Usuario;
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.facades.UsuarioFacade;
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.util.CriptPass;
 import ar.gob.ambiente.aplicaciones.gestionaplicaciones.util.Ldap;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.naming.NamingEnumeration;
@@ -57,20 +59,36 @@ public class MbLogin implements Serializable{
     
     public void login(ActionEvent actionEvent) throws NamingException{
         RequestContext context = RequestContext.getCurrentInstance();
-        Map<String,Object> attrs;
-
-        attrs = autenticar(usuario,pass);  
-        if(attrs != null){
+        
+        String claveEncript = CriptPass.encriptar(pass);
+        usLogueado = usuarioFacade.validar(usuario, claveEncript);
+        if(usLogueado != null){
             logeado = true;
-            displayName = attrs.get("displayName").toString();
-            // guardo el usuario logueado
-            usLogueado = usuarioFacade.getXNombre(usuario);
+            displayName = usLogueado.getNombreCompleto();
             context.addCallbackParam("view", "/gestionAplicaciones");
             context.addCallbackParam("estaLogeado", logeado);
-            guardarCookie();    
+            guardarCookie(); 
         }else{
             logeado = false;
         }
+        
+        /*****************************************************
+         * Suspendido para validar usuario mediante pass *****
+         * Volverá cuando se restaure el logeo centralizado **
+         *****************************************************/
+//        Map<String,Object> attrs;
+//        attrs = autenticar(usuario,pass); 
+//        if(attrs != null){
+//            logeado = true;
+//            displayName = attrs.get("displayName").toString();
+//            // guardo el usuario logueado
+//            usLogueado = usuarioFacade.getXNombre(usuario);
+//            context.addCallbackParam("view", "/gestionAplicaciones");
+//            context.addCallbackParam("estaLogeado", logeado);
+//            guardarCookie();    
+//        }else{
+//            logeado = false;
+//        }
     }
     
     /**

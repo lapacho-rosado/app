@@ -49,8 +49,23 @@ public class Usuario implements Serializable {
     @ManyToMany(mappedBy = "usuarios")
     private List<Aplicacion> aplicaciones;    
     
+    /**
+     * Clave para substituir el logeo único.
+     */
+    @Column (length=100)
+    @Size(message = "el campo clave no puede tener más de 100 caracteres", max = 100)   
+    private String clave;   
+    
     public Usuario(){
         aplicaciones = new ArrayList();
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 
     public Rol getRol() {
