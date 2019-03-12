@@ -41,11 +41,11 @@ con los parámetros de creación por defecto. Deberá restaurarse luego con el
 backup remitido por la coordinación del proyecto.
 
 Se deberá crear en el servidor de aplicaciones el recurso `Datasource` con 
-los siguientes parámetros (los que no se indiquen quedarán por defecto):
-Nombre: `GestionAplicacionesDS`
-JNDI:  `java:jboss/datasources/gestionAplicaciones`
-Driver: `postgresql`
-Connection URL: `la que corresponda a la configuración local`
+los siguientes parámetros (los que no se indiquen quedarán por defecto):  
+Nombre: `GestionAplicacionesDS`  
+JNDI:  `java:jboss/datasources/gestionAplicaciones`  
+Driver: `postgresql`  
+Connection URL: `la que corresponda a la configuración local`  
 Usuario y password de acceso: `los que correspondan a la configuración local`
 
 Nota: El driver deberá estar previamente registrado en el servidor de aplciaciones.
