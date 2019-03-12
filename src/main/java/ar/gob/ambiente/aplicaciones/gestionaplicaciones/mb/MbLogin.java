@@ -47,8 +47,48 @@ public class MbLogin implements Serializable{
     @EJB
     private UsuarioFacade usuarioFacade;    
 
+    public Usuario getUsLogueado() {
+        return usLogueado;
+    }
+
+    public void setUsLogueado(Usuario usLogueado) {
+        this.usLogueado = usLogueado;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+    
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public boolean isLogeado() {
+        return logeado;
+    }
+
+    public void setLogeado(boolean logeado) {
+        this.logeado = logeado;
+    }    
+    
     /**
-     * Creates a new instance of MbLogin
+     * Constructor
      */
     public MbLogin() {
     }
@@ -57,6 +97,11 @@ public class MbLogin implements Serializable{
         return "login";
     }
     
+    /**
+     * Método para autenticar el usuario según los datos registrados en la base
+     * @param actionEvent
+     * @throws NamingException 
+     */
     public void login(ActionEvent actionEvent) throws NamingException{
         RequestContext context = RequestContext.getCurrentInstance();
         
@@ -72,10 +117,7 @@ public class MbLogin implements Serializable{
             logeado = false;
         }
         
-        /*****************************************************
-         * Suspendido para validar usuario mediante pass *****
-         * Volverá cuando se restaure el logeo centralizado **
-         *****************************************************/
+
 //        Map<String,Object> attrs;
 //        attrs = autenticar(usuario,pass); 
 //        if(attrs != null){
@@ -93,11 +135,13 @@ public class MbLogin implements Serializable{
     
     /**
      * Método que autentica al usuario logeado, contra el Active Directory de la SAyDS
-     * Devuelve un map con los atributos del usuario
+     * Devuelve un map con los atributos del usuario.
+     * Este método entró en desuso para el contexto actual de las aplicaciones.
      * @param user
      * @param pass
      * @return 
      */
+    @Deprecated
     private Map<String, Object> autenticar(String user, String pass) throws NamingException{
         // obtengo la clase para acceder al Active Directory
         Ldap ldap = new Ldap();
@@ -191,46 +235,6 @@ public class MbLogin implements Serializable{
         
         FacesMessage facesMessage = new FacesMessage(message);
         FacesContext.getCurrentInstance().addMessage(null,  facesMessage);
-    }
-
-    public Usuario getUsLogueado() {
-        return usLogueado;
-    }
-
-    public void setUsLogueado(Usuario usLogueado) {
-        this.usLogueado = usLogueado;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-    
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    public boolean isLogeado() {
-        return logeado;
-    }
-
-    public void setLogeado(boolean logeado) {
-        this.logeado = logeado;
     }
     
     // clase para manejar los mensajes de error

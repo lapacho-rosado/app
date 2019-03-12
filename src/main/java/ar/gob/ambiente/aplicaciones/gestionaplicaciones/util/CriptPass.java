@@ -11,6 +11,7 @@ import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.ResourceBundle;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -49,7 +50,7 @@ public class CriptPass {
      */
     public static String encriptar(String texto) {
  
-        String secretKey = "zorbazorbas"; //llave para encriptar datos
+        String secretKey = ResourceBundle.getBundle("/Bundle").getString("ClaveEncriptar"); //llave para encriptar datos
         String base64EncryptedString = "";
  
         try {

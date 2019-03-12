@@ -1,9 +1,5 @@
 
 # Ruta de acceseso al contenedor
 Servidor=http://localhost:8080
+#Servidor=http://sacvefor.srv.bosquesnativos.net.ar
 
-# Credenciales LDAP
-domain=MEDIOAMBIENTE.GOV.AR
-ldapHost=ldap://vmad2008.medioambiente.gov.ar
-user=pruebapp
-pass=pruebapp2015*
