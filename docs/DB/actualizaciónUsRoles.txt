@@ -1,3 +1,0 @@
-1. Actualizar la tabla "usuario" mediante el script "actUsuario.sql"
-
-2. Agregar la tabla "rol" mediante el script "roles.sql"
