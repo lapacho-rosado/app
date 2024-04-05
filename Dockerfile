@@ -9,7 +9,10 @@ COPY pom.xml pom.xml
 RUN mvn dependency:go-offline
 
 COPY src src
+ARG CGL_DOMINIO
+ENV CGL_DOMINIO=$CGL_DOMINIO
 RUN mkdir -p /app/builds \
-    && mvn -e -B clean package
+    && sed -i "s@Server=.*@Server=${CGL_DOMINIO}@" ./src/main/resources/Config.properties \
+    && mvn -e -B package
 
 CMD /bin/bash -c "cp -f target/*.war /app/builds/app.war"
